@@ -1,0 +1,844 @@
+{
+  "domains": [
+    "mpowerhealth.eu",
+    "test.mpowerhealth.eu",
+    "mpowerhealth.local",
+    "ayrshire-arran.mpowerhealth.eu",
+    "ayrshirearran.mpowerhealth.eu",
+    "ayrshireandarran.mpowerhealth.eu",
+    "mpowerhealth-ayrshirearran.local",
+    "dumfries-galloway.mpowerhealth.eu",
+    "dumfriesgalloway.mpowerhealth.eu",
+    "dumfriesandgalloway.mpowerhealth.eu",
+    "mpowerhealth-dumfriesgalloway.local",
+    "eileanan-siar.mpowerhealth.eu",
+    "eileanansiar.mpowerhealth.eu",
+    "western-isles.mpowerhealth.eu",
+    "westernisles.mpowerhealth.eu",
+    "mpowerhealth-westernisles.local",
+    "fermanagh.mpowerhealth.eu",
+    "mpowerhealth-fermanagh.local",
+    "newry-south-armagh.mpowerhealth.eu",
+    "newrysoutharmagh.mpowerhealth.eu",
+    "mpowerhealth-newrysoutharmagh.local",
+    "drogheda-carrickmacross.mpowerhealth.eu",
+    "droghedacarrickmacross.mpowerhealth.eu",
+    "mpowerhealth-droghedacarrickmacross.local",
+    "finn-valley.mpowerhealth.eu",
+    "finnvalley.mpowerhealth.eu",
+    "mpowerhealth-finnvalley.local",
+    "south-leitrim.mpowerhealth.eu",
+    "southleitrim.mpowerhealth.eu",
+    "mpowerhealth-southleitrim.local"
+  ],
+  "routes": [
+    {
+      "name": "home",
+      "pattern": "/",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "primaryResponse",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+              "template": ">context.metaData.handlebars.queries.pages_home"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_home-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_home",
+                  "foot": ">context.metaData.handlebars.templates.pages_home-foot"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "five_hundred",
+      "pattern": "/500",
+      "debug": false,
+      "defaultStatusCode": 500,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.errors_500",
+                  "foot": ""
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "four_oh_four",
+      "pattern": "/404",
+      "debug": false,
+      "defaultStatusCode": 404,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "not_found",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+              "template": ">context.metaData.handlebars.queries.errors_404"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.errors_404",
+                  "foot": ""
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "robots",
+      "pattern": "/robots.txt",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "data"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "data": {
+                "layout": ">context.metaData.handlebars.layouts.data",
+                "parts": {
+                  "content": ">context.metaData.handlebars.templates.robots"
+                },
+                "contentType": "text/plain"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "page_tools",
+      "pattern": "/tools",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "primaryResponse",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+              "template": ">context.metaData.handlebars.queries.pages_page"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "supplimentaryResponses",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": [
+              {
+                "name": "resources",
+                "index": "web-content-production",
+                "type": "mpower-resource",
+                "template": ">context.metaData.handlebars.queries.pages_resources"
+              }
+            ]
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_page-tools"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "page_map",
+      "pattern": "/map",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "primaryResponse",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+              "template": ">context.metaData.handlebars.queries.pages_page"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "supplimentaryResponses",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": [
+              {
+                "name": "organisations",
+                "index": "web-content-production",
+                "type": "mpower-organisation-ayrshirearran,mpower-organisation-dumfriesgalloway,mpower-organisation-westernisles,mpower-organisation-fermanagh,mpower-organisation-newrysoutharmagh,mpower-organisation-droghedacarrickmacross,mpower-organisation-finnvalley,mpower-organisation-southleitrim",
+                "template": ">context.metaData.handlebars.queries.pages_organisations"
+              }
+            ]
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_page-map"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "page_terms",
+      "pattern": "/terms",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_static-terms"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "page_cookies",
+      "pattern": "/cookies",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_static-cookies"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "page_privacy",
+      "pattern": "/privacy",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_static-privacy"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "posts",
+      "pattern": "/news",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "primaryResponse",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-post-default,mpower-post-ayrshirearran,mpower-post-dumfriesgalloway,mpower-post-westernisles,mpower-post-fermanagh,mpower-post-newrysoutharmagh,mpower-post-droghedacarrickmacross,mpower-post-finnvalley,mpower-post-southleitrim",
+              "template": ">context.metaData.handlebars.queries.posts_latest"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_home-head-tags",
+                  "body": ">context.metaData.handlebars.templates.posts_posts"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "post",
+      "pattern": "/news/*slug",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "primaryResponse",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-post-default,mpower-post-ayrshirearran,mpower-post-dumfriesgalloway,mpower-post-westernisles,mpower-post-fermanagh,mpower-post-newrysoutharmagh,mpower-post-droghedacarrickmacross,mpower-post-finnvalley,mpower-post-southleitrim",
+              "template": ">context.metaData.handlebars.queries.posts_post"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.posts_post"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "_default",
+      "pattern": "/*path",
+      "debug": false,
+      "tasks": [
+        "context.metaData.commonTasks.currentSite",
+        {
+          "name": "primaryResponse",
+          "taskModule": "elasticsearch",
+          "config": {
+            "connectionStringTemplate": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+            "elasticsearchConfig": {
+              "apiVersion": "5.6"
+            },
+            "queryTemplates": {
+              "index": "web-content-production",
+              "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+              "template": ">context.metaData.handlebars.queries.pages_page"
+            }
+          },
+          "renderer": "handlebars"
+        },
+        {
+          "name": "destination",
+          "taskModule": "renderLayout",
+          "renderer": "handlebars",
+          "config": {
+            "logic": {
+              "if": [
+                "default"
+              ]
+            },
+            "output": "body",
+            "layouts": {
+              "default": {
+                "layout": ">context.metaData.handlebars.layouts.default",
+                "parts": {
+                  "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+                  "body": ">context.metaData.handlebars.templates.pages_page"
+                },
+                "contentType": "text/html"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "metaData": {
+    "assetsVersion": "0.0.1",
+    "assetsBase": "https://storage.googleapis.com/scvo-assets/test/mpowerhealth/",
+    "title": "mPower Health",
+    "menus": {
+      "corporate": [
+        {
+          "label": "About",
+          "icon": "info-circle",
+          "path": "/about",
+          "route": "^/about"
+        },
+        {
+          "label": "Partners",
+          "icon": "handshake",
+          "path": "/partners",
+          "route": "^/partners"
+        },
+        {
+          "label": "News",
+          "icon": "newspaper",
+          "path": "/news",
+          "route": "^/news"
+        },
+        {
+          "label": "Webinars",
+          "icon": "video",
+          "path": "/webinars",
+          "route": "^/webinars"
+        },
+        {
+          "label": "Contact",
+          "icon": "envelope",
+          "path": "/contact",
+          "route": "^/contact"
+        },
+        {
+          "label": "Resources",
+          "icon": "books",
+          "path": "/resources",
+          "route": "^/resources"
+        },
+        {
+          "label": "In your area",
+          "icon": "books",
+          "path": "/in-your-area",
+          "route": "^/in-your-area"
+        }
+      ],
+      "localised": [
+        {
+          "label": "Supporting you",
+          "icon": "handshake",
+          "path": "/support",
+          "route": "^/support"
+        },
+        {
+          "label": "Your community",
+          "icon": "users",
+          "path": "/community",
+          "route": "^/community"
+        },
+        {
+          "label": "Map",
+          "icon": "map-marked-alt",
+          "path": "/map",
+          "route": "^/map"
+        },
+        {
+          "label": "Digital health",
+          "icon": "list-alt",
+          "path": "/tools",
+          "route": "^/tools"
+        },
+        {
+          "label": "Stories",
+          "icon": "newspaper",
+          "path": "/stories",
+          "route": "^/stories"
+        },
+        {
+          "label": "Local team",
+          "icon": "envelope",
+          "path": "/contact",
+          "route": "^/contact"
+        }
+      ]
+    },
+    "elasticsearchUrl": "https://readonly:onlyread@2e6b5fd9344d4f8565e7d015d861b240.europe-west3.gcp.cloud.es.io:9243",
+    "domain-map": {
+      "mpowerhealth_eu": "default",
+      "mpowerhealth_local": "default",
+      "test_mpowerhealth_eu": "default",
+      "ayrshire-arran_mpowerhealth_eu": "ayrshirearran",
+      "ayrshirearran_mpowerhealth_eu": "ayrshirearran",
+      "ayrshireandarran_mpowerhealth_eu": "ayrshirearran",
+      "mpowerhealth-ayrshirearran_local": "ayrshirearran",
+      "dumfriesgalloway_mpowerhealth_eu": "dumfriesgalloway",
+      "dumfries-galloway_mpowerhealth_eu": "dumfriesgalloway",
+      "dumfriesandgalloway_mpowerhealth_eu": "dumfriesgalloway",
+      "mpowerhealth-dumfriesgalloway_local": "dumfriesgalloway",
+      "eileanan-siar_mpowerhealth_eu": "westernisles",
+      "eileanansiar_mpowerhealth_eu": "westernisles",
+      "western-isles_mpowerhealth_eu": "westernisles",
+      "westernisles_mpowerhealth_eu": "westernisles",
+      "mpowerhealth-westernisles_local": "westernisles",
+      "fermanagh_mpowerhealth_eu": "fermanagh",
+      "mpowerhealth-fermanagh_local": "fermanagh",
+      "newry-south-armagh_mpowerhealth_eu": "newrysoutharmagh",
+      "newrysoutharmagh_mpowerhealth_eu": "newrysoutharmagh",
+      "mpowerhealth-newrysoutharmagh_local": "newrysoutharmagh",
+      "drogheda-carrickmacross_mpowerhealth_eu": "droghedacarrickmacross",
+      "droghedacarrickmacross_mpowerhealth_eu": "droghedacarrickmacross",
+      "mpowerhealth-droghedacarrickmacross_local": "droghedacarrickmacross",
+      "finn-valley_mpowerhealth_eu": "finnvalley",
+      "finnvalley_mpowerhealth_eu": "finnvalley",
+      "mpowerhealth-finnvalley_local": "finnvalley",
+      "south-leitrim_mpowerhealth_eu": "southleitrim",
+      "southleitrim_mpowerhealth_eu": "southleitrim",
+      "mpowerhealth-southleitrim_local": "southleitrim"
+    },
+    "site-configurations": {
+      "default": {
+        "name": "default",
+        "title": "mPower",
+        "url": "https://test.mpowerhealth.eu"
+      },
+      "ayrshirearran": {
+        "name": "ayrshirearran",
+        "title": "mPower Ayshire & Arran",
+        "description": "Ayshire & Arran",
+        "healthBoard": {
+          "title": "NHS Ayshire & Arran",
+          "logo": "images/logos/partners/nhs-ayrshire-arran.png"
+        },
+        "url": "https://ayrshire-arran.mpowerhealth.eu"
+      },
+      "dumfriesgalloway": {
+        "name": "dumfriesgalloway",
+        "title": "mPower Dumfries & Galloway",
+        "description": "Wigtownshire, Dumfries & Galloway",
+        "healthBoard": {
+          "title": "NHS Dumfries & Galloway",
+          "logo": "images/logos/partners/nhs-dumfries-galloway.png"
+        },
+        "url": "https://dumfries-galloway.mpowerhealth.eu"
+      },
+      "westernisles": {
+        "name": "westernisles",
+        "title": "mPower Western Isles",
+        "description": "Western Isles",
+        "healthBoard": {
+          "title": "NHS Western Isles",
+          "logo": "images/logos/partners/nhs-western-isles.png"
+        },
+        "url": "https://western-isles.mpowerhealth.eu"
+      },
+      "fermanagh": {
+        "name": "fermanagh",
+        "title": "mPower Fermanagh",
+        "description": "Fermanagh",
+        "healthBoard": {
+          "title": "HSC Western Trust",
+          "logo": "images/logos/partners/hsc-western.png"
+        },
+        "url": "https://fermanagh.mpowerhealth.eu"
+      },
+      "newrysoutharmagh": {
+        "name": "newrysoutharmagh",
+        "title": "mPower Newry & South Armagh",
+        "description": "Newry and South Armagh",
+        "healthBoard": {
+          "title": "HSC Southern Trust",
+          "logo": "images/logos/partners/hsc-southern.png"
+        },
+        "url": "https://newry-south-armagh.mpowerhealth.eu"
+      },
+      "droghedacarrickmacross": {
+        "name": "droghedacarrickmacross",
+        "title": "mPower Drogheda & Carrickmacross",
+        "description": "Drogheda & Carrickmacross",
+        "healthBoard": {
+          "title": "HSE CH08",
+          "logo": "images/logos/partners/hse-ch08.png"
+        },
+        "url": "https://drogheda-carrickmacross.mpowerhealth.eu"
+      },
+      "finnvalley": {
+        "name": "finnvalley",
+        "title": "mPower Finn Valley",
+        "description": "Finn Valley",
+        "healthBoard": {
+          "title": "HSE CH01",
+          "logo": "images/logos/partners/hse-ch01.png"
+        },
+        "url": "https://finn-valley.mpowerhealth.eu"
+      },
+      "southleitrim": {
+        "name": "southleitrim",
+        "title": "mPower South Leitrim",
+        "description": "South Leitrim",
+        "healthBoard": {
+          "title": "HSE CH01",
+          "logo": "images/logos/partners/hse-ch01.png"
+        },
+        "url": "https://south-leitrim.mpowerhealth.eu"
+      }
+    },
+    "handlebars": {
+      "partials": {
+        "asset_url": "{{~#if @root.context.metaData.live~}}\n{{@root.context.metaData.assetsBase}}{{{url}}}?version={{{@root.context.metaData.assetsVersion}}}\n{{~else~}}\n/assets/{{{url}}}\n{{~/if~}}",
+        "components_advanced_checkbox_checkbox": "  <div class=\"mdc-checkbox mdc-list-item__meta\">\n    <input type=\"checkbox\" class=\"mdc-checkbox__native-control\"\n        {{#unless hideName}}name=\"{{name}}\"{{/unless}} value=\"{{value}}\"\n        id=\"cb-{{name}}-{{value}}\" {{#if checked}}checked{{/if}}\n        aria-labelledby=\"li-{{name}}-{{value}}\">\n    <div class=\"mdc-checkbox__background\">\n      <svg class=\"mdc-checkbox__checkmark\" viewBox=\"0 0 24 24\">\n        <path class=\"mdc-checkbox__checkmark-path\" fill=\"none\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\"/>\n      </svg>\n      <div class=\"mdc-checkbox__mixedmark\"></div>\n    </div>\n  </div>",
+        "components_advanced_checkbox_group": "<li class=\"mdc-list-item checkbox-list-parent {{#if hideParent}}checkbox-list-parent-hidden{{/if}}\" data-advanced-checkbox-group=\"{{name}}\"\n    role=\"checkbox\" aria-checked=\"false\" id=\"li-{{name}}-{{value}}\">\n  <label class=\"mdc-list-item__text\" for=\"cb-{{name}}-{{value}}\">\n    {{label}}\n    <span class=\"checkbox-list-indicator\" data-advanced-checkbox-group-indicator></span>\n  </label>\n  {{> components_advanced_checkbox_checkbox name=name hideName=true label=label}}\n</li>\n{{> @partial-block}}",
+        "components_advanced_checkbox_item": "<li class=\"mdc-list-item checkbox-list-child {{#if noIndent}}checkbox-list-child-no-indent{{/if}}\" data-advanced-checkbox-item=\"{{name}}\"\n    data-advanced-checkbox-group-parent=\"{{group}}\" role=\"checkbox\" aria-checked=\"{{checked}}\"\n    id=\"li-{{name}}-{{value}}\">\n  <label class=\"mdc-list-item__text\" for=\"cb-{{name}}-{{value}}\">{{label}}</label>\n  {{> components_advanced_checkbox_checkbox name=name hideName=false value=value label=label checked=checked}}\n</li>",
+        "components_advanced_checkbox_list": "<div class=\"mdc-list-group advanced-checkbox-list\" data-advanced-checkbox-list=\"{{name}}\">\n  <h3 class=\"mdc-list-group__subheader cursor-pointer noselect\" data-acl-collapse-trigger>\n    <span class=\"mdc-icon-toggle mdc-icon-toggle-xs pull-right\" data-acl-clear>\n      <span class=\"far fa-trash\" aria-hidden=\"true\"></span>\n    </span>\n    {{{label}}}\n  </h3>\n  <ul class=\"mdc-list mdc-list--dense\" style=\"display:none;\" role=\"group\" aria-label=\"{{label}}\">\n    {{> @partial-block}}\n  </ul>\n  <div class=\"collapse-trigger cursor-pointer noselect\" data-acl-collapse-trigger>\n    <span class=\"fas fa-chevron-down pull-centre\" data-acl-collapse-icon-collapsed=\"fa-chevron-down\" data-acl-collapse-icon-open=\"fa-chevron-up\"></span>\n  </div>\n</div>",
+        "components_anchored_menu": "{{#with (default menuId (concat \"menu-\" (random 1000 9999))) as |menuId|}}\n<div class=\"mdc-menu-surface--anchor {{../anchorClasses}}\">\n  <button class=\"mdc-button {{../buttonClasses}}\" id=\"{{menuId}}-trigger\">\n    {{#if ../imageUrl ~}}\n      <img src=\"{{../imageUrl}}\" class=\"{{../imageClasses}}\" />\n    {{/if}}\n    {{#if ../iconClasses}}\n      <span class=\"{{../iconClasses}}\"></span>\n    {{/if ~}}\n    {{{../buttonLabel}}}\n    {{#if ../arrowClasses}}\n      <span class=\"{{../arrowClasses}}\"></span>\n    {{/if}}\n  </button>\n  <div class=\"mdc-menu mdc-menu-surface {{../menuClasses}}\" tabindex=\"-1\" id=\"{{menuId}}\" data-menu-trigger=\"#{{menuId}}-trigger\">\n    <ul class=\"mdc-menu__items mdc-list {{../menuListClasses}}\" role=\"menu\" aria-hidden=\"true\">\n      {{> @partial-block}}\n    </ul>\n  </div>\n</div>\n{{/with}}\n",
+        "components_checkbox": "<div class=\"mdc-form-field {{fieldClasses}}\">\n  <div class=\"mdc-checkbox\">\n    <input type=\"checkbox\" class=\"mdc-checkbox__native-control\" id=\"{{id}}\" name=\"{{name}}\" value=\"{{default value label}}\"{{#if checked}} checked=\"checked\"{{/if}} />\n    <div class=\"mdc-checkbox__background\">\n      <svg class=\"mdc-checkbox__checkmark\"\n      viewBox=\"0 0 24 24\">\n      <path class=\"mdc-checkbox__checkmark-path\"\n      fill=\"none\"\n      stroke=\"white\"\n      d=\"M1.73,12.91 8.1,19.28 22.79,4.59\"/></svg>\n      <div class=\"mdc-checkbox__mixedmark\"></div>\n    </div>\n  </div>\n  <label for=\"{{id}}\">\n    {{{default label value}}}\n  </label>\n</div>\n\n",
+        "components_horizontal_card_scroller": "{{#ifAll (compare (length items) \"===\" 0) @partial-block}}\n  {{> @partial-block}}\n{{else}}\n  <div class=\"mdc-layout-grid equal-height {{outerClasses}}\">\n    {{#if (any items)}}\n    <div class=\"scroll-button scroll-left {{scrollButtonClasses}} {{scrollButtonLeftClasses}}\">\n      <span class=\"scroll-icon {{scrollIconClasses}} {{scrollLeftIconClasses}}\"></span>\n    </div>\n    <div class=\"scroll-button scroll-right {{scrollButtonClasses}} {{scrollButtonRightClasses}}\">\n      <span class=\"scroll-icon {{scrollIconClasses}} {{scrollRightIconClasses}}\"></span>\n    </div>\n    {{/if}}\n    <div class=\"mdc-layout-grid__inner scrolling-grid {{innerClasses}}\">\n      {{#if (any items)}}\n        {{#each items}}\n          <div class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone {{../itemClasses}}\">\n            {{> (lookup ../this 'itemsPartial')}}\n          </div>\n        {{/each}}\n        {{#if moreUrl}}\n          <div class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-4-desktop mdc-layout-grid__cell--span-4-tablet mdc-layout-grid__cell--span-4-phone latest-content-primary last-card {{moreClasses}}\">\n            <div class=\"mdc-card align-centre mdc-typography--body1 {{moreCardClasses}}\">\n              <a href=\"{{{moreUrl}}}\">{{default moreText \"More\"}}</a>\n            </div>\n          </div>\n        {{/if}}\n      {{/if}}\n    </div>\n  </div>\n{{/ifAll}}\n",
+        "components_radio_button": "<div class=\"mdc-form-field {{fieldClasses}}\"{{#if @partial-block ~}} data-ajax-radio-button='{{> @partial-block}}'{{/if}}>\n  <div class=\"mdc-radio {{innerClasses}}\">\n    <input class=\"mdc-radio__native-control\" type=\"radio\" id=\"{{default id name}}\" name=\"{{default name}}\" value=\"{{default value label}}\"{{#if active}} checked=\"checked\"{{/if}}{{#if required}} required{{/if}}>\n    <div class=\"mdc-radio__background\">\n      <div class=\"mdc-radio__outer-circle\"></div>\n      <div class=\"mdc-radio__inner-circle\"></div>\n    </div>\n  </div>\n  <label for=\"{{default id name}}\">{{default label value}}</label>\n</div>\n",
+        "components_scvo_bar": "<nav id=\"scvo-tab-bar\" class=\"mdc-tab-bar\">\n  <a class=\"mdc-tab{{#if (contains @root.request.url.hostname 'scvo.')}} mdc-tab--active{{/if}}\" href=\"{{#unless (contains @root.request.url.hostname 'scvo.')}}https://scvo.org{{else}}/{{/unless}}\"><span class=\"mdc-tab--label\">SCVO</span></a>\n  <a class=\"mdc-tab{{#if (contains @root.request.url.hostname 'goodmoves.')}} mdc-tab--active{{/if}}\" href=\"https://goodmoves.com\"><span class=\"mdc-tab--label\">Goodmoves</span></a>\n  <a class=\"mdc-tab{{#if (contains @root.request.url.hostname 'thirdforcenews.')}} mdc-tab--active{{/if}}\" href=\"https://thirdforcenews.org.uk\"><span class=\"mdc-tab--label\">TFN</span></a>\n  <a class=\"mdc-tab\" href=\"{{#unless (contains @root.request.url.hostname 'scvo.')}}https://scvo.org{{/unless}}/scottish-charity-awards\"><span class=\"mdc-tab--label\">Scottish Charity Awards</span></a>\n  <a class=\"mdc-tab\" href=\"{{#unless (contains @root.request.url.hostname 'scvo.')}}https://scvo.org{{/unless}}/the-gathering-2020\"><span class=\"mdc-tab--label\">The Gathering</span></a>\n  <a class=\"mdc-tab pull-right brand-logo\" href=\"{{#unless (contains @root.request.url.hostname 'scvo.')}}https://scvo.org{{else}}/{{/unless}}\" title=\"Scottish Council for Voluntary Organisations\">\n    <img src=\"{{~>asset_url url='images/logos/scvo-inverse.png'}}\" alt=\"Scottish Council for Voluntary Organisations\" />\n  </a>\n</nav>",
+        "components_tab_bar": "<div class=\"mdc-tab-bar {{extraClasses}}\" {{#if id}}id=\"{{id}}\"{{/if}} role=\"tablist\" data-tab-bar='{\n      \"defaultTabIdentifier\": {{{stringify (default defaultTabIdentifier null)}}}\n    }'>\n  <div class=\"mdc-tab-scroller\">\n    <div class=\"mdc-tab-scroller__scroll-area\">\n      <div class=\"mdc-tab-scroller__scroll-content\">\n        {{> @partial-block}}\n      </div>\n    </div>\n  </div>\n</div>\n",
+        "components_tab": "<{{#if url}}a href=\"{{{url}}}\"{{else}}button{{/if}} class=\"mdc-tab {{linkClasses}} {{#if active}} mdc-tab--active{{/if}}\"\n              role=\"tab\" {{#if active}}aria-selected=\"true\"{{else}}aria-hidden=\"true\"{{/if}} tabindex=\"0\"\n              {{#if tabName}}data-tab-name=\"{{tabName}}\"{{/if}}>\n  <span class=\"mdc-tab__content {{contentClasses}}\">\n    {{#if iconClasses}}<span class=\"mdc-tab__icon {{iconClasses}}\"></span>{{/if}}\n    <span class=\"mdc-tab__text-label {{labelClasses}}\">{{label}}</span>\n  </span>\n  <span class=\"mdc-tab-indicator {{indicatorClasses}} {{#if active}}mdc-tab-indicator--active{{/if}}\">\n    <span class=\"mdc-tab-indicator__content {{indicatorContentClasses}} mdc-tab-indicator__content--underline\"></span>\n  </span>\n  <span class=\"mdc-tab__ripple\"></span>\n  </{{#if url}}a{{else}}button{{/if}}>",
+        "pagination": "{{#compare paging.totalPages \">\" 1 ~}}\n<ul class=\"pagination inline-list\">\n  {{#if firstLastNavigation ~}}\n  <li class=\"{{#if paging.prevPage}}{{else}}disabled{{/if}}\">\n    <a class=\"pagination-arrow\" href=\"{{@root.request.params.uri.pathname}}?{{{querystringify @root.request.params.query page=1 json=false}}}\">\n      <i class=\"far fa-fw fa-chevron-double-left\"></i>\n    </a>\n  </li>\n  {{/if ~}}\n  <li class=\"{{#if paging.prevPage}}{{else}}disabled{{/if}}\">\n    <a class=\"pagination-arrow\" href=\"{{@root.request.params.uri.pathname}}?{{{querystringify @root.request.params.query page=paging.prevPage json=false}}}\">\n      <i class=\"far fa-fw fa-chevron-left\"></i>\n    </a>\n  </li>\n  {{#each paging.pageRange ~}}\n  <li class=\"{{#compare ../paging.currentPage \"===\" this.pageNumber}}current-page {{/compare}}pagination-distance-{{this.distance}}\">\n    <a class=\"pagination-page\" href=\"{{@root.request.params.uri.pathname}}?{{{querystringify @root.request.params.query page=this.pageNumber json=false}}}\">\n      {{this.pageNumber}}\n    </a>\n  </li>\n  {{/each ~}}\n  <li class=\"{{#if paging.nextPage}}{{else}}disabled{{/if}}\">\n    <a class=\"pagination-arrow\" href=\"{{@root.request.params.uri.pathname}}?{{{querystringify @root.request.params.query page=paging.nextPage json=false}}}\">\n      <i class=\"far fa-fw fa-chevron-right\"></i>\n    </a>\n  </li>\n  {{#if firstLastNavigation ~}}\n  <li class=\"{{#if paging.nextPage}}{{else}}disabled{{/if}}\">\n    <a class=\"pagination-arrow\" href=\"{{@root.request.params.uri.pathname}}?{{{querystringify @root.request.params.query page=paging.totalPages json=false}}}\">\n      <i class=\"far fa-fw fa-chevron-double-right\"></i>\n    </a>\n  </li>\n  {{/if ~}}\n</ul>\n{{/compare ~}}",
+        "search_info": "{{#*inline \"current_page\" ~}}\n{{#compare paging.totalResults \">\" 10 ~}} |\n<strong>Current page:</strong> {{addCommas paging.currentPage}} of {{addCommas paging.totalPages}}\n{{/compare ~}}\n{{/inline ~}}\n\n{{#if paging.totalResults ~}}\n<div class=\"search-info mdc-elevation--z2\">\n  <strong>Total results:</strong> {{addCommas paging.totalResults}}\n  {{#ifAny @root.request.params.query.keywords @root.request.params.query.activities @root.request.params.query.beneficiaries @root.request.params.query.geographical_areas_funded @root.request.params.query.type_of_cost @root.request.params.query.type_of_funding @root.request.params.query.source_of_fund @root.request.params.query.miscellaneous @root.request.params.query.page ~}}\n  {{#ifAll (compare paging.totalResults \">\" 50) (compare @root.route.name \"!==\" \"posts\") ~}}\n  (limited to 50 per search)\n  {{else}}\n  {{> current_page}}\n  {{/ifAll ~}}\n  {{else}}\n  {{> current_page}}\n  {{/ifAny ~}}\n</div>\n{{else}}\n{{#ifAny @root.request.params.query.keywords @root.request.params.query.activities @root.request.params.query.beneficiaries @root.request.params.query.geographical_areas_funded @root.request.params.query.type_of_cost @root.request.params.query.type_of_funding @root.request.params.query.source_of_fund @root.request.params.query.miscellaneous ~}}\n<div class=\"search-info mdc-elevation--z1\">\n  No results could be found, please try a different search query\n</div>\n{{/ifAny ~}}\n{{/if ~}}"
+      },
+      "templates": {
+        "pages_home-foot": "",
+        "pages_home-head-tags": "<title>{{@root.data.currentSite.title}}</title>\n<meta property=\"og:title\" content=\"{{@root.data.currentSite.title}}\" data-dynamic=\"true\">",
+        "pages_home": "<div class=\"container-content mpower-page mpower-home t-padding\">\n  <div class=\"b-padding-full t-margin b-margin-full\">\n    {{{@root.data.primaryResponse.hits.hits.[0]._source.content}}}\n  </div>\n</div>",
+        "pages_page-head-tags": "{{#if data.primaryResponse.hits.hits.[0] ~}}\n{{#with data.primaryResponse.hits.hits.[0]._source ~}}\n{{#ifAny title og_title ~}}\n<title>{{@root.data.currentSite.title}} – {{{default title og_title}}}</title>\n<meta property=\"og:title\" content=\"{{@root.data.currentSite.title}} – {{{default title og_title}}}\" data-dynamic=\"true\">\n{{else}}\n<title>{{@root.data.currentSite.title}}</title>\n<meta property=\"og:title\" content=\"{{@root.data.currentSite.title}}\" data-dynamic=\"true\">\n{{/ifAny ~}}\n<!-- <meta property=\"og:image\" content=\"\" data-dynamic=\"true\"> -->\n<meta property=\"og:image:width\" content=\"96\" data-dynamic=\"true\">\n<meta property=\"og:image:height\" content=\"96\" data-dynamic=\"true\">\n{{#ifAny og_summary description ../og_summary ../description ~}}\n<meta property=\"og:summary\" content=\"{{stripTags (regexReplace (default og_summary (default ../og_summary (default description ../description))) '\\r|\\n' 'gi' '')}}\" data-dynamic=\"true\">\n<meta name=\"description\" content=\"{{stripTags (regexReplace (default description (default ../description (default og_summary ../og_summary))) '\\r|\\n' 'gi' '')}}\" data-dynamic=\"true\">\n{{/ifAny ~}}\n{{/with ~}}\n{{else}}\n<title>{{@root.data.currentSite.title}}</title>\n<meta property=\"og:title\" content=\"{{@root.data.currentSite.title}}\" data-dynamic=\"true\">\n<meta property=\"og:summary\" content=\"{{@root.data.currentSite.title}} lists funders with a track record of supporting projects in Scotland and is run by the Scottish Council for Voluntary Organisations\" data-dynamic=\"true\">\n<meta name=\"description\" content=\"{{@root.data.currentSite.title}} lists funders with a track record of supporting projects in Scotland and is run by the Scottish Council for Voluntary Organisations\" data-dynamic=\"true\">\n{{/if ~}}",
+        "pages_page-map": "{{#*inline \"marker\"}}\n<marker style=\"display:none;\" data-map=\"fullMap\" data-lat=\"{{lat}}\" data-lng=\"{{lng}}\" data-title=\"{{source.title}}\">\n  <div class=\"map-content\">\n    {{#with source ~}}\n    <h3 class=\"mdc-typography--headline7\">\n      {{{title}}}\n    </h3>\n    <div class=\"mdc-typography--body2\">\n      {{{content}}}\n    </div>\n    <div class=\"mdc-typography--body2\">\n      <ul>\n        {{#if address ~}}\n        <li><strong>Address:</strong> {{address}}</li>\n        {{/if ~}}\n        {{#if phone_number ~}}\n        <li><strong>Phone:</strong> {{phone_number}}</li>\n        {{/if ~}}\n        {{#if email_address ~}}\n        <li><strong>Email:</strong> <a href=\"mailto:{{email_address}}\">{{email_address}}</a></li>\n        {{/if ~}}\n        {{#if website_address ~}}\n        <li><strong>Website:</strong> <a href=\"{{fixUrl website_address}}\">{{website_address}}</a></li>\n        {{/if ~}}\n      </ul>\n    </div>\n    {{/with ~}}\n  </div>\n</marker>\n{{/inline}}\n\n<div class=\"container-content mpower-page t-padding\">\n  <div class=\"b-padding-full t-margin b-margin-full\">\n    {{#compare @root.data.primaryResponse.hits.total \">\" 0 ~}}\n    <h1 class=\"mdc-typography--headline4\">\n      {{{@root.data.primaryResponse.hits.hits.[0]._source.title}}}\n    </h1>\n    {{{@root.data.primaryResponse.hits.hits.[0]._source.content}}}\n\n    <div id=\"map-full\" data-map-name=\"fullMap\" data-map-clustered-options='{}'>\n      {{#each @root.data.supplimentaryResponses.organisations.hits.hits ~}}\n        {{#each (arrayify _source.geo_coords) ~}}\n          {{> marker lat=lat lng=lon source=../_source index=@index}}\n        {{/each ~}}\n      {{/each ~}}\n    </div>\n\n    {{else}}\n    <h2 class=\"mdc-typography--headline5\">\n      Error 404: Page not found\n    </h2>\n    {{/compare ~}}\n  </div>\n</div>",
+        "pages_page-tools": "<div class=\"container-content mpower-page t-padding\">\n  <div class=\"b-padding-full t-margin b-margin-full\">\n    {{#compare @root.data.primaryResponse.hits.total \">\" 0 ~}}\n    <h1 class=\"mdc-typography--headline4\">\n      {{{@root.data.primaryResponse.hits.hits.[0]._source.title}}}\n    </h1>\n    {{{@root.data.primaryResponse.hits.hits.[0]._source.content}}}\n\n    {{#each @root.data.supplimentaryResponses.resources.hits.hits ~}}\n    <hr />\n    {{#with _source ~}}\n    <h2>{{{title}}}</h2>\n    <p>\n      {{{content}}}\n    </p>\n    {{#if website_address ~}}\n    <p>\n      <a href=\"{{website_address}}\">Read more</a>\n    </p>\n    {{/if ~}}\n    {{#if downloads ~}}\n    <h4>Downloads</h4>\n    <ul>\n      {{#each downloads ~}}\n      <li>{{{this}}}</li>\n      {{/each ~}}\n    </ul>\n    {{/if ~}}\n    {{#compare @root.data.currentSite.name \"default\" ~}}\n    {{#if areas_used_list ~}}\n    <p>\n      In use by:\n    </p>\n    <div class=\"partner-logos\">\n      {{#each areas_used_list ~}}\n      <a href=\"{{getProperty @root.context.metaData.site-configurations (concat this '.url')}}\"><img src=\"{{~>asset_url url=(concat 'images/logos/partners/' this '.png')~}}\"></a>\n      {{/each ~}}\n    </div>\n    {{/if ~}}\n    {{/compare ~}}\n    {{/with ~}}\n    {{/each ~}}\n    {{else}}\n    <h2 class=\"mdc-typography--headline5\">\n      Error 404: Page not found\n    </h2>\n    {{/compare ~}}\n  </div>\n</div>",
+        "pages_page": "<div class=\"container-content mpower-page t-padding\">\n  <div class=\"b-padding-full t-margin b-margin-full\">\n    {{#compare @root.data.primaryResponse.hits.total \">\" 0 ~}}\n    <h1 class=\"mdc-typography--headline4\">\n      {{{@root.data.primaryResponse.hits.hits.[0]._source.title}}}\n    </h1>\n    {{{@root.data.primaryResponse.hits.hits.[0]._source.content}}}\n    {{else}}\n    <h2 class=\"mdc-typography--headline5\">\n      Error 404: Page not found\n    </h2>\n    {{/compare ~}}\n  </div>\n</div>",
+        "pages_static-cookies": "<div class=\"container-content t-padding\">\n  <div class=\"mdc-card list h-padding-full b-padding-full t-margin b-margin-full mdc-elevation--z3\">\n    <h1 class=\"mdc-typography--headline4\">\n      Cookie policy\n    </h1>\n    <h3>Who we are</h3>\n    <p>\n      Funding Scotland is operated by the Scottish Council for Voluntary Organisations (SCVO). SCVO is a Scottish Charitable Incorporated Organisation. Charity registered in Scotland SC003558. Registered office Mansfield Traquair Centre, 15 Mansfield Place, Edinburgh EH3 6BB.\n    </p>\n    <p>\n      We are committed to respecting and protecting your privacy. This policy explains how we do this. Please also read the terms and conditions for Funding Scotland.\n    </p>\n    <p>\n      If you follow a link from Funding Scotland that takes you to another website that is not owned or operated by SCVO, these websites will have their own privacy policies. Please make sure you read these too.\n    </p>\n    <h3>What information do we collect?</h3>\n    <p>\n      When you register to use Funding Scotland or sign up to receive emails from Funding Scotland, we collect your <strong>name, email address, organisation name and postcode</strong>.\n    </p>\n    <p>\n      When you use Funding Scotland we may also record your <strong>IP address</strong>: this is the individual identification number that is assigned to your computer when it is connected to the Internet. It is required to be used by our EU-based servers to enable you to browse the website. It is also stored for up to a month in logs to enable us to investigate errors.\n    </p>\n    <p>\n      We use Google Analytics cookies to track how the website is used, but personal data is not recorded and your internet (IP) address is anonymised. <a href=\"/cookies\">Find out more about how we use cookies</a>.\n    </p>\n    <p>\n      If you contact us, we may keep a record of that. You can read the full <a href=\"https://scvo.org/privacy/enquiries\">SCVO enquiry privacy notice</a>.\n    </p>\n    <h3>How will we use the information?</h3>\n    <p>\n      We collect limited information about you on Funding Scotland. The information we collect is used in two ways:\n    </p>\n    <ul>\n      <li>to help us administer the website – so we can give you access as a registered user and so we can analyse how the website is used</li>\n      <li>to help you use the website – to give you access as a registered user, to allow us to send you emails (if you have registered for them)</li>\n    </ul>\n    <p>\n      We will not share any personal data with any third parties unless you ask us to do so or we have asked for your consent in advance.\n    </p>\n    <h3>How to contact us</h3>\n    <p>\n      You can write to us at the address above or contact us by email or phone at:\n    </p>\n    <ul>\n      <li><a href=\"mailto:fundingscotland@scvo.org.uk\">fundingscotland@scvo.org.uk</a></li>\n      <li>0800 169 0022</li>\n    </ul>\n    <h3>Your rights over your information</h3>\n    <p>\n      You can unsubscribe from the Funding Scotland email bulletin at any time by using the unsubscribe link at the bottom of the bulletin, by unchecking the box in User/My Account or by contacting us.\n    </p>\n    <p>\n      If you no longer wish to be registered on Funding Scotland, you can contact us at any time to be removed.\n    </p>\n    <p>\n      By law, you can ask us what information we hold about you, and you can ask us to correct it if it is inaccurate.  You can also ask us to give you a copy of the information and to stop using your information.\n    </p>\n    <p>\n      To submit a request for your data, please contact us by email, post or telephone, please use the contact information provided above.\n    </p>\n    <h3>Your right to complain</h3>\n    <p>\n      If you have a complaint about our use of your information, you can contact the Information Commissioner's Office online at <a href=\"https://ico.org.uk/concerns\">https://ico.org.uk/concerns</a> or by phone on 0303 123 1113.\n    </p>\n  </div>\n</div>",
+        "pages_static-privacy": "<div class=\"container-content t-padding\">\n  <div class=\"mdc-card list h-padding-full b-padding-full t-margin b-margin-full mdc-elevation--z3\">\n    <h1 class=\"mdc-typography--headline4\">\n      Privacy policy\n    </h1>\n    <h3>Who we are</h3>\n    <p>\n      Funding Scotland is operated by the Scottish Council for Voluntary Organisations (SCVO). SCVO is a Scottish Charitable Incorporated Organisation. Charity registered in Scotland SC003558. Registered office Mansfield Traquair Centre, 15 Mansfield Place, Edinburgh EH3 6BB.\n    </p>\n    <p>\n      We are committed to respecting and protecting your privacy. This policy explains how we do this. Please also read the terms and conditions for Funding Scotland.\n    </p>\n    <p>\n      If you follow a link from Funding Scotland that takes you to another website that is not owned or operated by SCVO, these websites will have their own privacy policies. Please make sure you read these too.\n    </p>\n    <h3>What information do we collect?</h3>\n    <p>\n      When you register to use Funding Scotland or sign up to receive emails from Funding Scotland, we collect your <strong>name, email address, organisation name and postcode</strong>.\n    </p>\n    <p>\n      When you use Funding Scotland we may also record your <strong>IP address</strong>: this is the individual identification number that is assigned to your computer when it is connected to the Internet. It is required to be used by our EU-based servers to enable you to browse the website. It is also stored for up to a month in logs to enable us to investigate errors.\n    </p>\n    <p>\n      We use Google Analytics cookies to track how the website is used, but personal data is not recorded and your internet (IP) address is anonymised. <a href=\"/cookies\">Find out more about how we use cookies</a>.\n    </p>\n    <p>\n      If you contact us, we may keep a record of that. You can read the full <a href=\"https://scvo.org/privacy/enquiries\">SCVO enquiry privacy notice</a>.\n    </p>\n    <h3>How will we use the information?</h3>\n    <p>\n      We collect limited information about you on Funding Scotland. The information we collect is used in two ways:\n    </p>\n    <ul>\n      <li>to help us administer the website – so we can give you access as a registered user and so we can analyse how the website is used</li>\n      <li>to help you use the website – to give you access as a registered user, to allow us to send you emails (if you have registered for them)</li>\n    </ul>\n    <p>\n      We will not share any personal data with any third parties unless you ask us to do so or we have asked for your consent in advance.\n    </p>\n    <h3>How to contact us</h3>\n    <p>\n      You can write to us at the address above or contact us by email or phone at:\n    </p>\n    <ul>\n      <li><a href=\"mailto:fundingscotland@scvo.org.uk\">fundingscotland@scvo.org.uk</a></li>\n      <li>0800 169 0022</li>\n    </ul>\n    <h3>Your rights over your information</h3>\n    <p>\n      You can unsubscribe from the Funding Scotland email bulletin at any time by using the unsubscribe link at the bottom of the bulletin, by unchecking the box in User/My Account or by contacting us.\n    </p>\n    <p>\n      If you no longer wish to be registered on Funding Scotland, you can contact us at any time to be removed.\n    </p>\n    <p>\n      By law, you can ask us what information we hold about you, and you can ask us to correct it if it is inaccurate.  You can also ask us to give you a copy of the information and to stop using your information.\n    </p>\n    <p>\n      To submit a request for your data, please contact us by email, post or telephone, please use the contact information provided above.\n    </p>\n    <h3>Your right to complain</h3>\n    <p>\n      If you have a complaint about our use of your information, you can contact the Information Commissioner's Office online at <a href=\"https://ico.org.uk/concerns\">https://ico.org.uk/concerns</a> or by phone on 0303 123 1113.\n    </p>\n  </div>\n</div>",
+        "pages_static-terms": "<div class=\"container-content t-padding\">\n  <div class=\"mdc-card list h-padding-full b-padding-full t-margin b-margin-full mdc-elevation--z3\">\n    <h1 class=\"mdc-typography--headline4\">\n      Terms & conditions\n    </h1>\n    <h3>Copyright</h3>\n\n    <p>This website is protected by copyright. All material on the website belongs to SCVO or to third parties who have contributed material to the site. Please note that material accessed through a link to any third party website will be protected by the terms and conditions of that third party site. Permission is given for the downloading and temporary storage of one or more of the pages of the website for the purpose of viewing on a personal computer or monitor. The reproduction, permanent storage, or re-transmission of the contents of this website is permitted for your personal, non-commercial use provided that you acknowledge the copyright owner.</p>\n\n    <p>For permission to reproduce any of the contents of this website for any other purpose please contact <a href=\"mailto:enquiries@scvo.org.uk\">enquiries@scvo.org.uk</a>.</p>\n\n    <h3>Links</h3>\n\n    <p>Any links to third party websites are provided solely for the purpose of your convenience. We have no control over the content of such websites and accordingly make no representation concerning the content of those sites to you nor make any endorsement of any of them. We have not tested any content, software features or links found on any sites linked to and do not give any representation regarding the quality, safety, suitability or reliability of any of them or any of the material contained in them. Please also note that the right to reproduce any contents of these websites may also be restricted by the terms and conditions of the website.</p>\n\n    <p>Links to websites outwith the SCVO portfolio are denoted with an icon: <i class=\"fal fa-external-link\"> </i></p>\n\n    <h3>Disclaimer</h3>\n\n    <p>Please note that telephone and other connection charges may apply to your use of this website. For details of such charges you should contact your telephone company and internet service provider.</p>\n\n    <p>It is a feature of this website that much of the information is contributed by many different third parties and SCVO does not control those parties or their information and has no responsibility for any information they contribute.</p>\n\n    <p>Opinions expressed within the information contained in this website are those of the authors and do not necessarily represent the opinion of SCVO.</p>\n\n    <p>The website is not guaranteed to be free from any so-called computer viruses and it is strongly recommended that you check for such viruses before down-loading it to your computer equipment.</p>\n\n    <p>The information and other contents of this website are designed to comply with Scots Law. This website shall be governed by and construed in accordance with Scots Law and all parties irrevocably submit to the jurisdiction of the Scottish Courts. If anything on this website is construed as being contrary to the laws applicable in any other country, then this website is not intended to be accessed by persons from that country. Any persons who are subject to such laws shall not be entitled to use this website unless they can satisfy us that such use would be lawful.</p>\n\n    <h3>About use of Content on this Site</h3>\n\n    <p>All material on the Site or made available via the Site and all material made available to you via e-mail (referred to in these Terms and Conditions as the “Content”) belongs to us or to third parties who have allowed us to use and display their material. You may retrieve and display Content from the Site on a computer screen, print individual pages on paper and store such pages in electronic form on disk (but not on any server or other storage device connected to a network) for your personal, non-commercial use provided that you acknowledge the copyright owner. Except as expressly set out above, you may not reproduce, modify or in any way commercially exploit any of the Content. In particular, please contact us at <a href=\"mailto:enquiries@scvo.org.uk\">enquiries@scvo.org.uk</a> to obtain our consent first if you wish to:</p>\n\n    <ul><li>redistribute any of the Content (including by using it as part of any library, archive or similar service);</li><li>remove the copyright notice from any copies of Content made under these Terms and Conditions; or</li><li>create a database in electronic or structured manual form by systematically downloading and storing all or any of the Content.</li></ul>\n\n    <p>It is a feature of the Site that much of the Content is contributed to us by many different third parties and we do not control those parties or their information and have no responsibility for any information they contribute. Opinions expressed within the Content are those of the authors and do not necessarily represent our opinions.</p>\n\n    <p>From time to time the Site provides “comments”&nbsp; facilities whereby you may post information and other text about issues or other matters. We reserve the right to review these from time to time and delete any messages or text which we, in our sole discretion, decide are inappropriate. You hereby grant us the right to use and display any material which you post to or publish on the Site via the bulletin boards or chat facilities. In the unlikely event that you find any inaccurate information on the Site or have any complaint about what we have published please email <a href=\"mailto:enquiries@scvo.org.uk\">enquiries@scvo.org.uk</a>. We will investigate on receipt and take such action which we, in our opinion, is deemed necessary.</p>\n\n    <p>If you would like to link to the Site please contact <a href=\"mailto:enquiries@scvo.org.uk\">enquiries@scvo.org.uk</a>.</p>\n\n    <h3>About Our Liability to You</h3>\n\n    <p>The Content is only for your general information and use and is not intended to address your particular requirements. In particular, the Content does not constitute any form of advice, recommendation or arrangement by us and is not intended to be relied upon by users in making (or refraining from making) any decisions.</p>\n\n    <p>The Site contains links to other World Wide Web sites provided by independent third parties (referred to in these Terms and Conditions as “Third Party Sites”), either directly or through frames (i.e. material which is taken from a third party site but which is shown as though it is part of the scvo.org Site). Where possible, we will make clear where such links are being made. We are not responsible for the availability or content of Third Party Sites and will not be a party to, or in any way be responsible for, any transaction concerning goods or services available from such Third Party Sites. Due to the number of sources from which we obtain Content and the nature of electronic distribution via the Internet, we do not give any warranties or make any representations in respect of the Site Services. In particular, the Site Services are provided on an “as is”, “with all faults” and “as available” basis. So far as lawfully possible, we exclude all liability to you in contract or delict (negligence) (other than where negligence by us gives rise to personal injury or death) including without limitation: (i) any implied conditions regarding the satisfactory quality or fitness for a particular purpose of the Site Services; (ii) any express or statutory conditions relating to the Site Services; and (iii) any conditions or duties regarding accuracy, timeliness, completeness or performance of the Site Services.</p>\n\n    <p>Additionally, we make no representation that the Site Services are free from infection by viruses or anything else that has contaminating or destructive properties. Other than as specified in this paragraph entitled “About our liability to you”, we shall not be liable to pay any money to you by way of compensation for any loss suffered by you as a result of use of the Site Services and/or the Site including by way of example any loss of profits, loss of goodwill, or loss of anticipated savings.</p>\n\n    <h3>About Our Privacy Policy</h3>\n\n    <p>We take the privacy of our users seriously and are committed to safeguarding their privacy. The&nbsp;<a href=\"/privacy\" target=\"_self\" rel=\"noopener noreferrer\">privacy policy</a> explains our data processing practices and only applies to this website.</p>\n\n    <p>The information that you provide to us about yourself will only be used by us in accordance with our&nbsp;<a href=\"/privacy\" target=\"_self\" rel=\"noopener noreferrer\">privacy policy</a>, that is described in full at the end of these Terms and Conditions. This includes:- (i) using your information for the effective administration of the Site and to communicate with you; (ii) the disclosure of your information to any voluntary organisation to which you make a donation using the Site; (iii) the disclosure of your information on the Site and to third parties where required as part of the Site Services; and (iv) the disclosure of your information to third parties with whom we have a business relationship.</p>\n\n    <p>We employ encryption technology in all areas of the site which require you to provide your personal or account information. This is done to help protect you from unauthorised use of the information you are submitting to our website.</p>\n\n    <h3>About Changes to These Terms &amp; Conditions</h3>\n\n    <p>We reserve the right to make changes to any part of the Site. Due to our policy of updating and improving the Site, we may wish to change these Terms and Conditions (including those relating to your use of Content). When the Terms and Conditions are changed, we will notify you by e-mail or by publishing details of those changes by including them at the end of these Terms and Conditions (see “Updates to these Terms and Conditions”). Your acceptance of any changes to these Terms and Conditions is made by your using the Site after we have published or notified you of the changes. If you do not accept the changes, you should not use the Site any further after the changes have been published at the end of these Terms and Conditions or after you receive notice of changes to the Terms and Conditions.</p>\n\n    <h3>About Termination of Your Registration</h3>\n\n    <p>If you breach any term of these Terms and Conditions or if we are unable to verify or authenticate any information you submit to the Site, we reserve the right to delete any information provided by you to the Site and immediately terminate your registration or ability to access the Site and/or any other service provided by us to you. On termination you will stop using the Site Services made available to you as a registered user.</p>\n\n    <h3>About the Law Relating to These Terms &amp; Conditions</h3>\n\n    <p>We are situated in Scotland and the law of Scotland shall govern any interpretation of these Terms and Conditions. The Scottish Courts shall decide any disputes between us.</p>\n\n    <h3>Information Collected and use of Cookies</h3>\n\n    <p>We collect personal information from you through the use of enquiry and registration forms. We also collect information automatically about your visit to our site. The information obtained in this way, which includes demographic data and appraising patterns, is only used in aggregate form. Cookies are small files that your Web browser places on your computer’s hard drive. They can be used for remembering user names and preferences, tracking click streams and for presenting members with personalised versions of the site. You have the option of setting your browser to reject cookies. More information on the use of Cookies can be found in our&nbsp;<a href=\"/privacy\" target=\"_self\" rel=\"noopener noreferrer\">privacy policy</a>.</p>\n\n    <h3>Use of Personal Information and Disclosures</h3>\n\n    <p>We process personal information collected for the purposes of (a) processing your orders; (b) keeping you updated on your orders; (c) keeping you updated about events, issues and news relating to voluntary organisations; and (d) providing you with information about products and services on offer. We may disclose your information to our agents and other service providers for the purposes of providing you with the benefits of membership of SCVO and only for such purposes. In order to serve you most efficiently, credit card transactions and order fulfilment are handled by reputable third party banking and distribution institutions. They receive the information needed to verify and authorise your credit card and to process your order. They are under strict obligations to keep your personal information private.</p>\n\n    <p>We also use information in aggregate form (so that no individual user is identified): (a) to build up marketing profiles; (b) to aid strategic development; (c) to manage our relationship with advertisers; (d) to audit usage of the site; (e) for market research; and (f) to provide services alongside third parties.</p>\n\n    <h3>Communications</h3>\n\n    <p>To keep you informed about our latest offers news and events, we may notify you through one of our e-mail newsletters or by mail of current issues, events, promotions and new additions to our website. If you do not wish to receive such communications please contact <a href=\"mailto:enquiries@scvo.org.uk\">enquiries@scvo.org.uk</a>, third parties with whom we have shared your information in accordance with “Use of Personal Information” above may contact you by mail, telephone, e-mail or fax to tell you about promotions or services which may be of interest to you or give you information about forthcoming events, promotions or other activities. Such third parties shall only contact you where you have provided consent when registering with scvo.org.uk or subsequently. If at any time you wish to withdraw your consent for third parties to contact you please send your notification to <a href=\"mailto:enquiries@scvo.org.uk\">enquiries@scvo.org.uk</a>. We may ask you to voluntarily complete surveys in order to improve our services to you. Survey answers are confidential. If you do not wish to participate in a survey you are free to decline.</p>\n\n    <h3>Obtaining Information</h3>\n\n    <p>You have the right to apply for a copy of the information we hold about you and to have any inaccuracies corrected (we reserve the right to make a small charge to cover the cost of providing you with a copy of the information which we hold about you).</p>\n\n    <h3>Law Enforcement</h3>\n\n    <p>We fully co-operate with the police in identifying those who use our service for illegal activities. We reserve the right to report to the police any activities that we reasonably believe to be unlawful.</p>\n  </div>\n</div>",
+        "posts_post": "<div class=\"container-content t-padding\">\n  <div class=\"mdc-card list h-padding-full b-padding-full t-margin b-margin-full mdc-elevation--z3\">\n    {{#compare @root.data.primaryResponse.hits.total \">\" 0 ~}}\n    {{#with @root.data.primaryResponse.hits.hits.[0]._source ~}}\n    <h1 class=\"mdc-typography--headline4\">\n      {{{title}}}\n    </h1>\n    <p class=\"mdc-typography--caption\">\n      Posted by {{{author_name_full}}} on {{{momentFormat (moment publish_on \"x\") \"Do MMMM YYYY\"}}}\n    </p>\n    {{{content}}}\n    {{/with ~}}\n    {{else}}\n    <h2 class=\"mdc-typography--headline5\">\n      Error 404: Page not found\n    </h2>\n    {{/compare ~}}\n  </div>\n</div>",
+        "posts_posts": "<div class=\"container-content t-padding\">\n  <div class=\"list b-padding-full t-margin b-margin-full\">\n    {{!-- {{> search_info paging=@root.data.primaryResponse.pagination}} --}}\n\n    <div class=\"mdc-layout-grid equal-height\">\n      <div class=\"mdc-layout-grid__inner\">\n        {{#each @root.data.primaryResponse.hits.hits ~}}\n        <div class=\"mdc-layout-grid__cell mdc-layout-grid__cell--span-12-desktop mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-4-phone\">\n          <div class=\"mdc-card gist {{_type}}\">\n            {{#with _source ~}}\n            {{#ifAny image_feature featured_image header_background ~}}\n            <div class=\"mdc-card__media mdc-card__media--16-9\" style=\"background-image: url(&quot;{{default (default (default image_wide image_feature) featured_image) header_background}}&quot;);\"></div>\n            {{/ifAny ~}}\n            <div class=\"demo-card__primary\">\n              <h2 class=\"demo-card__title mdc-typography mdc-typography--headline6 h-padding-full\">\n                <a href=\"{{#if url}}{{url}}?utm_source=Widget&amp;utm_medium=Widget&amp;utm_campaign=Widget-Traffic{{else}}/news/{{replace (regexReplace slug \".+?(?=_)_news_\" \"gi\" \"\") \"_\" \"/\"}}{{/if}}\">{{{title}}}</a>\n              </h2>\n              <h3 class=\"demo-card__subtitle mdc-typography mdc-typography--subtitle2 h-padding-full\">\n                <span class=\"far fa-calendar-edit\" aria-hidden=\"true\"></span>\n                {{{momentFormat (moment publish_on \"x\") \"Do MMMM YYYY\"}}}\n              </h3>\n            </div>\n            <div class=\"demo-card__secondary mdc-typography mdc-typography--body2 x-padding-full\">\n              {{{default (truncate content 280) description}}}\n            </div>\n            <div class=\"mdc-card__actions\">\n              <div class=\"mdc-card__action-buttons\">\n                <a href=\"{{#if url}}{{url}}?utm_source=Widget&amp;utm_medium=Widget&amp;utm_campaign=Widget-Traffic{{else}}/news/{{replace (regexReplace slug \".+?(?=_)_news_\" \"gi\" \"\") \"_\" \"/\"}}{{/if}}\" class=\"mdc-button mdc-card__action mdc-card__action--button\">Read more</a>\n              </div>\n            </div>\n            {{/with ~}}\n          </div>\n        </div>\n        {{/each ~}}\n      </div>\n    </div>\n\n    {{> pagination paging=@root.data.primaryResponse.pagination}}\n  </div>\n</div>",
+        "robots": "User-agent: *\nDisallow:\n\nUser-agent: litefinder\nDisallow: /\n\nUser-agent: Slurp\nDisallow: /\n\nUser-agent: Baidu\nDisallow: /\n"
+      },
+      "layouts": {
+        "data": "{{{layoutParts.content}}}",
+        "default": "<!doctype html>\n<html lang=\"en\">\n<head prefix=\"og: http://ogp.me/ns#\">\n  <meta charset=\"utf-8\">\n  <base href=\"/\">\n  {{{layoutParts.head}}}\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n  <!--\n\n  Powered by:\n      ███████╗ ██████╗██╗   ██╗ ██████╗  ██╗   ██████╗  ██████╗ ██╗   ██╗████████╗███████╗██████╗\n     ██╔════╝██╔════╝██║   ██║██╔═══██╗ ╚██╗  ██╔══██╗██╔═══██╗██║   ██║╚══██╔══╝██╔════╝██╔══██╗\n    ███████╗██║     ██║   ██║██║   ██║  ╚██╗ ██████╔╝██║   ██║██║   ██║   ██║   █████╗  ██████╔╝\n   ╚════██║██║     ╚██╗ ██╔╝██║   ██║  ██╔╝ ██╔══██╗██║   ██║██║   ██║   ██║   ██╔══╝  ██╔══██╗\n  ███████║╚██████╗ ╚████╔╝ ╚██████╔╝ ██╔╝  ██║  ██║╚██████╔╝╚██████╔╝   ██║   ███████╗██║  ██║\n  ╚══════╝ ╚═════╝  ╚═══╝   ╚═════╝ ╚═╝   ╚═╝  ╚═╝ ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝\n\n  -->\n\n  <link rel=\"shortcut icon\" href=\"{{~>asset_url url='images/icons/favicon.ico'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"57x57\" href=\"{{~>asset_url url='images/icons/apple-icon-57x57.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"60x60\" href=\"{{~>asset_url url='images/icons/apple-icon-60x60.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"{{~>asset_url url='images/icons/apple-icon-72x72.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"{{~>asset_url url='images/icons/apple-icon-76x76.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"{{~>asset_url url='images/icons/apple-icon-114x114.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"{{~>asset_url url='images/icons/apple-icon-120x120.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"144x144\" href=\"{{~>asset_url url='images/icons/apple-icon-144x144.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"{{~>asset_url url='images/icons/apple-icon-152x152.png'~}}\">\n  <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"{{~>asset_url url='images/icons/apple-icon-180x180.png'~}}\">\n  <link rel=\"icon\" type=\"image/png\" sizes=\"192x192\" href=\"{{~>asset_url url='images/icons/android-icon-192x192.png'~}}\">\n  <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"{{~>asset_url url='images/icons/favicon-32x32.png'~}}\">\n  <link rel=\"icon\" type=\"image/png\" sizes=\"96x96\" href=\"{{~>asset_url url='images/icons/favicon-96x96.png'~}}\">\n  <link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"{{~>asset_url url='images/icons/favicon-16x16.png'~}}\">\n  <link rel=\"manifest\" href=\"{{~>asset_url url='images/icons/manifest.json'~}}\">\n  <meta name=\"msapplication-TileColor\" content=\"#3c7524\">\n  <meta name=\"msapplication-TileImage\" content=\"{{~>asset_url url='images/icons/ms-icon-144x144.png'~}}\">\n  <meta name=\"theme-color\" content=\"#3c7524\">\n\n  <!-- <link rel=\"canonical\" href=\"https://mpowerhealth.eu{{request.params.uri.pathname}}\" /> -->\n  <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-3467930-30\"></script>\n  <script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'UA-3467930-30', {\n    'send_page_view': true,\n    'anonymize_ip': true,\n    'cookieDomain': 'none',\n    'custom_map': {\n      'dimension1': 'hit_type',\n      'dimension2': 'parent_document'\n    }\n  });\n\n  {{#ifAny request.params.query.debug (contains request.url.hostname \".local\") ~}}\n  console.log('#### DEBUG MODE ON ####');\n  console.log('Request:', {{{regexReplace (regexReplace (stringify request) \"(<\\/script)\" \"gi\" '</scr\\\" + \\\"ipt') \"(\\r|\\n)\" \"gi\" \"\"}}});\n  console.log('Route:', {{{regexReplace (regexReplace (stringify route) \"(<\\/script)\" \"gi\" '</scr\\\" + \\\"ipt') \"(\\r|\\n)\" \"gi\" \"\"}}});\n  console.log('Context:', {{{regexReplace (regexReplace (stringify context) \"(<\\/script)\" \"gi\" '</scr\\\" + \\\"ipt') \"(\\r|\\n)\" \"gi\" \"\"}}});\n  console.log('Data:', {{{regexReplace (regexReplace (stringify data) \"(<\\/script)\" \"gi\" '</scr\\\" + \\\"ipt') \"(\\r|\\n)\" \"gi\" \"\"}}});\n  console.log('Menus:', {{{regexReplace (regexReplace (stringify @root.context.metaData.menus) \"(<\\/script)\" \"gi\" '</scr\\\" + \\\"ipt') \"(\\r|\\n)\" \"gi\" \"\"}}});\n  {{#if errors.[0]}}\n    console.error('Task Errors:', {{{regexReplace (regexReplace (stringify errors) \"(<\\/script)\" \"gi\" '</scr\\\" + \\\"ipt') \"(\\r|\\n)\" \"gi\" \"\"}}});\n  {{/if}}\n  {{/ifAny ~}}\n  </script>\n\n  <link type=\"text/css\" rel=\"stylesheet\" href=\"{{~>asset_url url='libraries/leaflet/leaflet.css'~}}\" />\n  <link type=\"text/css\" rel=\"stylesheet\" href=\"{{~>asset_url url='libraries/fontawesome-pro/css/all.min.css'~}}\">\n\n  <link type=\"text/css\" rel=\"stylesheet\" href=\"{{~>asset_url url='main.css'}}\">\n</head>\n<body class=\"mdc-theme--footer-dark-bg\">\n  <mpowerhealth-site>\n    <div class=\"mdc-typography\" style=\"background-image: url('{{~>asset_url url='images/mpower-header.png'~}}');\">\n      {{#ifAny request.params.query.debug (contains request.url.hostname \".local\") ~}}\n        {{#if errors.[0]}}\n          <div style=\"z-index:100;position:fixed;top:0;right:0;padding:5px;background-color:#ff0000;color:#ffffff;\">\n            Route Task Errors (F12)\n          </div>\n        {{/if}}\n        {{#if logs.[0]}}\n          <div style=\"z-index:100;position:fixed;bottom:0;right:0;padding:5px;background-color:#0000ff;color:#ffffff;\"\n               onclick=\"document.querySelector('#route-debug-log').style.display='block';\">\n            Route Log\n          </div>\n          <div style=\"z-index:100;position:fixed;bottom:0;left:0;right:0;padding:5px;background-color:#ededed;color:#000000;overflow:auto;height:50vh;display:none;border-top:1px solid #cccccc;\" id=\"route-debug-log\">\n            <a style=\"position:fixed;right:25px;\" onclick=\"document.querySelector('#route-debug-log').style.display='none';\">x</a>\n<pre style=\"white-space: pre-wrap;\">\n{{~#each logs}}\n{{{this}}}\n\n{{/each~}}\n</pre>\n          </div>\n        {{/if}}\n      {{/ifAny}}\n\n      <header class=\"mdc-top-app-bar\" id=\"top-bar\">\n        <div class=\"container-fluid\">\n          <div class=\"mdc-top-app-bar__row mdc-top-app-bar__upper\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start mdc-top-app-bar__section--logo\">\n              <a href=\"{{#if (contains request.url.hostname \".local\")}}https://mpowerhealth.local:8080{{else}}{{@root.context.metaData.site-configurations.default.url}}{{/if}}\">\n                <img src=\"{{~>asset_url url='images/logos/mpower.png'~}}\" alt=\"mPower Health\" />\n              </a>\n            </section>\n            {{#compare @root.data.currentSite.name \"!==\" \"default\" ~}}\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-middle mdc-top-app-bar__section--partner\">\n              <img src=\"{{~>asset_url url=@root.data.currentSite.healthBoard.logo ~}}\" alt=\"In partnership with {{@root.data.currentSite.healthBoard.title}}\" />\n            </section>\n            {{/compare ~}}\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section--partner hide-sm\">\n              <a href=\"https://www.seupb.eu/iva-overview\">\n                <img src=\"{{~>asset_url url='images/logos/interreg-vi-logo.png'~}}\" alt=\"INTERREG VA Programme\" />\n              </a>\n            </section>\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-end mdc-top-app-bar__section--nav hide-lg\">\n              <button class=\"mdc-top-app-bar__navigation-icon\" data-drawer-target=\"#mobile-menu\">\n                <span class=\"far fa-fw fa-2x fa-bars\"></span>\n              </button>\n            </section>\n          </div>\n          {{#compare @root.data.currentSite.name \"!==\" \"default\" ~}}\n          <div class=\"mdc-top-app-bar__row mdc-top-app-bar__lower\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start mdc-top-app-bar__main\">\n              <div class=\"container-content v-margin\">\n                <h1 class=\"mdc-typography--headline3\">{{@root.data.currentSite.description}}</h1>\n              </div>\n            </section>\n          </div>\n          {{/compare ~}}\n          <div class=\"mdc-top-app-bar__row mdc-top-app-bar__lower\">\n            <section class=\"mdc-top-app-bar__section mdc-top-app-bar__section--align-start mdc-top-app-bar__main hide-md hide-sm\">\n              {{#> components_tab_bar\n                   extraClasses=\"mdc-tab-bar__auto-width\"\n                   id=\"main-tab-bar\"}}\n                {{> components_tab\n                    url=\"/\"\n                    labelClasses=\"mdc-theme--on-primary\"\n                    active=(regexMatch @root.request.url.pathname \"^/$\" \"gi\")\n                    label=\"Home\"}}\n                {{#compare @root.data.currentSite.name \"default\" ~}}\n                {{#each @root.context.metaData.menus.corporate ~}}\n                  {{>components_tab\n                      url=(stripTrailingSlash path)\n                      labelClasses=\"mdc-theme--on-primary\"\n                      active=(regexMatch @root.request.url.pathname route \"gi\")\n                      label=label}}\n                {{/each}}\n                {{else}}\n                {{#each @root.context.metaData.menus.localised ~}}\n                  {{>components_tab\n                      url=(stripTrailingSlash path)\n                      labelClasses=\"mdc-theme--on-primary\"\n                      active=(regexMatch @root.request.url.pathname route \"gi\")\n                      label=label}}\n                {{/each}}\n                {{/compare ~}}\n              {{/components_tab_bar}}\n            </section>\n          </div>\n        </div>\n      </header>\n\n      <aside class=\"mdc-drawer mdc-drawer--modal\" id=\"mobile-menu\" data-mdc-auto-init=\"MDCDrawer\">\n        <div class=\"mdc-drawer__content\">\n          <nav class=\"mdc-list\">\n            <a class=\"mdc-list-item {{#compare @root.request.url.pathname \"/\"}} mdc-list-item--activated{{/compare}}\"\n               href=\"/\" aria-selected=\"true\" tabindex=\"1\">\n              <span class=\"far fa-home mdc-list-item__graphic\" aria-hidden=\"true\"></span>\n              Home\n            </a>\n            {{#compare @root.data.currentSite.name \"default\" ~}}\n            {{#each @root.context.metaData.menus.corporate ~}}\n              <a class=\"mdc-list-item {{#if (regexMatch @root.request.url.pathname path \"gi\")}} mdc-list-item--activated{{/if}}\"\n                  href=\"{{stripTrailingSlash path}}\"\n                  {{#if (regexMatch @root.request.url.pathname path \"gi\")}}aria-selected=\"true\"{{else}}aria-hidden=\"true\"{{/if}}>\n                {{#if icon ~}}\n                <span class=\"far fa-{{icon}} mdc-list-item__graphic\" aria-hidden=\"true\"></span>\n                {{/if ~}}\n                {{{label}}}\n              </a>\n            {{/each}}\n            {{else}}\n            {{#each @root.context.metaData.menus.localised ~}}\n              <a class=\"mdc-list-item {{#if (regexMatch @root.request.url.pathname path \"gi\")}} mdc-list-item--activated{{/if}}\"\n                  href=\"{{stripTrailingSlash path}}\"\n                  {{#if (regexMatch @root.request.url.pathname path \"gi\")}}aria-selected=\"true\"{{else}}aria-hidden=\"true\"{{/if}}>\n                {{#if icon ~}}\n                <span class=\"far fa-{{icon}} mdc-list-item__graphic\" aria-hidden=\"true\"></span>\n                {{/if ~}}\n                {{{label}}}\n              </a>\n            {{/each}}\n            {{/compare ~}}\n          </nav>\n        </div>\n      </aside>\n\n      <div class=\"mdc-drawer-scrim\"></div>\n\n      <main class=\"mdc-theme--primary-light-bg main-body {{#if layoutParts.sidebar}}drawer-container-permanent{{else}}drawer-container-temporary{{/if}}\">\n        {{#if layoutParts.sidebar ~}}\n        <aside class=\"mdc-drawer mdc-drawer--occasional\" id=\"sidebar-temporary\" data-menu-button=\".filter-search-button\">\n          {{{layoutParts.sidebar}}}\n        </aside>\n        <div class=\"mdc-drawer-scrim\"></div>\n        {{/if ~}}\n\n        {{{layoutParts.body}}}\n\n        <a href=\"https://www.seupb.eu/iva-overview\" class=\"hide-md hide-lg\">\n          <img src=\"{{~>asset_url url='images/logos/interreg-vi-logo.png'~}}\" alt=\"INTERREG VA Programme\" />\n        </a>\n        {{#compare @root.data.currentSite.name \"default\" ~}}\n        <div class=\"container-content\">\n          <div class=\"partner-logos\">\n            <a href=\"http://www.cawt.com/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/06/logo-2.png\"></a>\n            <a href=\"https://nhsnss.org/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/06/logo-1.png\"></a>\n            <a href=\"https://www.hse.ie/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/06/logo-3.png\"></a>\n            <a href=\"https://www.nhsaaa.net/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-4.png\"></a>\n            <a href=\"http://www.nhsdg.scot.nhs.uk\"><img src=\"{{~>asset_url url='images/logos/partners/dumfriesgalloway.png'~}}\"></a>\n            <a href=\"https://www.wihb.scot.nhs.uk/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-6.png\"></a>\n            <a href=\"http://www.southerntrust.hscni.net/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-7.png\"></a>\n            <a href=\"http://www.westerntrust.hscni.net/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-8.png\"></a>\n            <a href=\"https://www.uhi.ac.uk/\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-9.png\"></a>\n            <a href=\"https://scvo.org\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-10.png\"></a>\n            {{!-- <a href=\"https://www.seupb.eu/iva-overview\"><img src=\"https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-11.png\"></a> --}}\n          </div>\n        </div>\n        {{/compare ~}}\n      </main>\n\n      <footer class=\"mdc-layout__footer mdc-theme--footer-bg mdc-theme--on-footer\" style=\"background-image: url('{{~>asset_url url='images/mpower-communityscape.png'~}}');\">\n        <div class=\"container-content\">\n          <p class=\"smaller\">\n            &copy; {{momentFormat (moment) \"YYYY\"}}. The Scottish Council for Voluntary Organisations (SCVO) is a Scottish Charitable Incorporated Organisation.<br />\n            Charity registered in Scotland <a href=\"https://www.oscr.org.uk/about-charities/search-the-register/charity-details?number=SC003558\">SC003558</a>. Registered office Mansfield Traquair Centre, 15 Mansfield Place, Edinburgh EH3 6BB.\n          </p>\n        </div>\n      </footer>\n    </div>\n  </mpowerhealth-site>\n\n  <script type=\"text/javascript\">\n  var $buoop = {required:{e:-3,f:-3,o:-3,s:-1,c:-3},insecure:true,unsupported:true,api:2018.07 };\n  function $buo_f(){\n    var e = document.createElement(\"script\");\n    e.src = \"//browser-update.org/update.min.js\";\n    document.body.appendChild(e);\n  };\n  try {document.addEventListener(\"DOMContentLoaded\", $buo_f,false)}\n  catch(e){window.attachEvent(\"onload\", $buo_f)}\n  </script>\n\n  <script type=\"text/javascript\" src=\"{{~>asset_url url='main.js'~}}\"></script>\n\n  <script>\n    var mpowerhealth = null; readyListeners = [];\n    $(document).ready(function() {\n      mpowerhealth = new mPowerHealth.mPowerHealth({\n        apiKey: \"AIzaSyBWJ1dOz94gI_UvH0hJHHy0j_UlGz7V__A\",\n        authDomain: \"mpower-health.firebaseapp.com\",\n        databaseURL: \"https://mpower-health.firebaseio.com\",\n        projectId: \"mpower-health\",\n        storageBucket: \"mpower-health.appspot.com\",\n        messagingSenderId: \"848695487785\",\n        appId: \"1:848695487785:web:89e2a431712d53d4\"\n      });\n      ready = true;\n      readyListeners.forEach(function(listener) {\n        listener();\n      });\n    });\n\n    function registerReadyListener(listener) {\n      if (mpowerhealth) {\n        listener();\n      } else {\n        readyListeners.push(listener);\n      }\n    }\n\n    {{#if @root.context.metaData.terms ~}}\n    var terms = {{{safeStringify @root.context.metaData.terms}}};\n    {{/if ~}}\n  </script>\n\n  {{{layoutParts.foot}}}\n</body>\n</html>",
+        "rss": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<rss version=\"2.0\">\n  <channel>\n    {{{layoutParts.head}}}\n    <lastBuildDate>{{momentFormat (moment) 'ddd, DD MMM YYYY HH:mm:ss ZZ'}}</lastBuildDate>\n    <pubDate>{{momentFormat (moment) 'ddd, DD MMM YYYY HH:mm:ss ZZ'}}</pubDate>\n    <ttl>1800</ttl>\n    {{{layoutParts.body}}}\n  </channel>\n</rss>"
+      },
+      "queries": {
+        "pages_home": "{{#json}}\n  {{{json key=\"size\" value=1}}},\n  {{#json key=\"_source\" type=\"array\"}}\n    \"wpid\",\n    \"slug\",\n    \"title\",\n    \"sub_title\",\n    \"og_title\",\n    \"content\",\n    \"breadcrumb\",\n    \"categories_id\",\n    \"categories_slug\",\n    \"author\",\n    \"header_background\",\n    \"header_text\",\n    \"hide_overlay\"\n  {{/json}},\n  {{#json key=\"query\"}}\n    {{#json key=\"bool\"}}\n      {{#json key=\"filter\" type=\"array\"}}\n        {{#json}}\n          {{#json key=\"term\"}}\n            {{{json key=\"_type\" value=(concat \"mpower-page-\" @root.data.currentSite.name)}}}\n          {{/json}}\n        {{/json}},\n        {{#json}}\n          {{#json key=\"term\"}}\n            {{{json key=\"slug\" value=@root.data.currentSite.name}}}\n          {{/json}}\n        {{/json}}\n      {{/json}}\n    {{/json}}\n  {{/json}}\n{{/json}}",
+        "pages_menus": "{{#json}}\n  {{{json key=\"size\" value=100}}},\n  {{#json key=\"_source\" type=\"array\"}}\n    \"slug\",\n    \"title\",\n    \"menu_order\",\n    \"menu_label\",\n    \"which_menus\",\n    \"menu_url\",\n    \"menu_icon\"\n  {{/json}},\n  {{#json key=\"query\"}}\n    {{#json key=\"bool\"}}\n      {{#json key=\"filter\" type=\"array\"}}\n        {{#json}}\n          {{#json key=\"term\"}}\n            {{{json key=\"_type\" value=(concat \"mpower-page-\" @root.data.currentSite.name)}}}\n          {{/json}}\n        {{/json}}\n      {{/json}}\n    {{/json}}\n  {{/json}},\n  {{#json key=\"sort\" type=\"array\"}}\n    {{#json}}\n      {{#json key=\"menu_order\"}}\n        {{{json key=\"order\" value=\"asc\"}}}\n      {{/json}}\n    {{/json}}\n  {{/json}}\n{{/json}}",
+        "pages_not-found": "{\n  \"size\": 4,\n  \"_source\": [\n    \"title\",\n    \"slug\"\n  ],\n  \"query\": {\n    {{#if data.primaryResponse.hits.hits.[0] ~}}\n    \"match_none\": {}\n    {{else}}\n    \"query_string\": {\n      \"query\": \"{{{regexReplace (default request.url.path \"\") \"([^a-zA-Z0-9\\s])\" \"gi\" \" \"}}}\",\n      \"default_field\": \"text_bag_boost\",\n      \"default_operator\": \"OR\",\n      \"analyzer\": \"snowball\"\n    }\n    {{/if ~}}\n  }\n}",
+        "pages_organisations": "{{#json}}\n  {{{json key=\"size\" value=100}}},\n  {{#json key=\"_source\" type=\"array\"}}\n    \"wpid\",\n    \"slug\",\n    \"title\",\n    \"content\",\n    \"geo_coords\",\n    \"postcode\",\n    \"address\",\n    \"phone_number\",\n    \"email_address\",\n    \"website_address\"\n  {{/json}},\n  {{#json key=\"query\"}}\n    {{#compare @root.data.currentSite.name \"default\" ~}}\n      {{#json key=\"match_all\"}}\n      {{/json}}\n    {{else}}\n      {{#json key=\"bool\"}}\n        {{#json key=\"filter\" type=\"array\"}}\n          {{#json}}\n            {{#json key=\"term\"}}\n              {{{json key=\"_type\" value=(concat \"mpower-organisation-\" @root.data.currentSite.name)}}}\n            {{/json}}\n          {{/json}},\n          {{#json}}\n            {{#json key=\"match_all\"}}\n            {{/json}}\n          {{/json}}\n        {{/json}}\n      {{/json}}\n    {{/compare}}\n  {{/json}}\n{{/json}}",
+        "pages_page": "{{#json}}\n  {{{json key=\"size\" value=1}}},\n  {{#json key=\"_source\" type=\"array\"}}\n    \"wpid\",\n    \"slug\",\n    \"title\",\n    \"sub_title\",\n    \"og_title\",\n    \"content\",\n    \"breadcrumb\",\n    \"categories_id\",\n    \"categories_slug\",\n    \"author\",\n    \"header_background\",\n    \"header_text\",\n    \"hide_overlay\"\n  {{/json}},\n  {{#json key=\"query\"}}\n    {{#json key=\"bool\"}}\n      {{#json key=\"filter\" type=\"array\"}}\n        {{#json}}\n          {{#json key=\"term\"}}\n            {{{json key=\"_type\" value=(concat \"mpower-page-\" @root.data.currentSite.name)}}}\n          {{/json}}\n        {{/json}},\n        {{#json}}\n          {{#json key=\"term\"}}\n            {{{json key=\"slug\" value=(concat @root.data.currentSite.name \"_\" @root.request.params.path)}}}\n          {{/json}}\n        {{/json}}\n      {{/json}}\n    {{/json}}\n  {{/json}}\n{{/json}}",
+        "pages_resources": "{{#json}}\n  {{{json key=\"size\" value=100}}},\n  {{#json key=\"_source\" type=\"array\"}}\n    \"wpid\",\n    \"slug\",\n    \"title\",\n    \"content\",\n    \"areas_used_list\",\n    \"website_address\"\n  {{/json}},\n  {{#json key=\"query\"}}\n    {{#compare @root.data.currentSite.name \"default\" ~}}\n      {{#json key=\"match_all\"}}\n      {{/json}}\n    {{else}}\n      {{#json key=\"bool\"}}\n        {{#json key=\"filter\" type=\"array\"}}\n          {{#json}}\n            {{#json key=\"term\"}}\n              {{{json key=\"areas_used_list\" value=@root.data.currentSite.name}}}\n            {{/json}}\n          {{/json}},\n          {{#json}}\n            {{#json key=\"match_all\"}}\n            {{/json}}\n          {{/json}}\n        {{/json}}\n      {{/json}}\n    {{/compare ~}}\n  {{/json}}\n{{/json}}",
+        "posts_latest": "{\n  \"size\": 10,\n  \"from\": {{multiply (subtract (default @root.request.params.query.page 1) 1) 10}},\n  \"_source\": [\n    \"title\",\n    \"url\",\n    \"slug\",\n    \"publish_on\",\n    \"content\",\n    \"description\",\n    \"image_feature\",\n    \"image_wide\",\n    \"featured_image\",\n    \"header_background\"\n  ],\n  \"query\": {\n    \"bool\": {\n      \"minimum_should_match\": \"1\",\n      \"should\": [\n        {{#each @root.context.metaData.site-configurations ~}}\n        {{#ifAny (compare @key \"===\" \"default\") (compare @key @root.data.currentSite.name) ~}}\n        {\n          \"bool\": {\n            \"must\": [\n              {\n                \"term\": {\n                  \"_type\": {\n                    \"value\" : \"mpower-post-{{@key}}\"\n                  }\n                }\n              }\n            ]\n          }\n        },\n        {{/ifAny ~}}\n        {{/each ~}}\n        {\n          \"bool\": {\n            \"must\": [\n              {\n                \"term\": {\n                  \"_type\": {\n                    \"value\" : \"tfn-legacy-post-news\"\n                  }\n                }\n              },\n              {\n                \"term\": {\n                  \"categories\": \"\"\n                }\n              }\n            ]\n          }\n        }\n      ]\n    }\n  },\n  \"sort\": [\n    {\n      \"publish_on\": {\n        \"order\" : \"desc\"\n      }\n    }\n  ]\n}",
+        "posts_post": "{\n  \"size\": 1,\n  \"_source\": [\n    \"wpid\",\n    \"slug\",\n    \"publish_on\",\n    \"title\",\n    \"og_title\",\n    \"og_image\",\n    \"og_summary\",\n    \"content\",\n    \"author\",\n    \"author_name_full\",\n    \"author_job_title\",\n    \"author_organisation_name\",\n    \"author_slug\",\n    \"author_sfid\",\n    \"categories\",\n    \"categories_id\"\n  ],\n  \"query\": {\n    \"terms\": {\n      \"slug\": [\n        \"{{concat @root.data.currentSite.name \"_\" @root.request.params.path}}\",\n        \"{{concat \"default_\" @root.request.params.path}}\"\n      ]\n    }\n  }\n}\n"
+      }
+    },
+    "commonTasks": {
+      "currentSite": {
+        "name": "currentSite",
+        "taskModule": "render",
+        "renderer": "jsone",
+        "config": {
+          "template": {
+            "_let": {
+              "hostname": {
+                "_eval": "jsone.stringReplace(request.url.hostname, '.', '_')"
+              }
+            },
+            "in": {
+              "_let": {
+                "path": "${context.metaData['domain-map'][hostname]}"
+              },
+              "in": {
+                "_eval": "context.metaData['site-configurations'][path]"
+              }
+            }
+          },
+          "output": "data"
+        }
+      }
+    }
+  }
+}
