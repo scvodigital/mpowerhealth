@@ -1,0 +1,84 @@
+{
+  "corporate": [
+    {
+      "label": "About",
+      "icon": "info-circle",
+      "path": "/about",
+      "route": "^/about"
+    },
+    {
+      "label": "Partners",
+      "icon": "handshake",
+      "path": "/partners",
+      "route": "^/partners"
+    },
+    {
+      "label": "News",
+      "icon": "newspaper",
+      "path": "/news",
+      "route": "^/news"
+    },
+    {
+      "label": "Webinars",
+      "icon": "video",
+      "path": "/webinars",
+      "route": "^/webinars"
+    },
+    {
+      "label": "Contact",
+      "icon": "envelope",
+      "path": "/contact",
+      "route": "^/contact"
+    },
+    {
+      "label": "Resources",
+      "icon": "books",
+      "path": "/resources",
+      "route": "^/resources"
+    },
+    {
+      "label": "In your area",
+      "icon": "books",
+      "path": "/in-your-area",
+      "route": "^/in-your-area"
+    }
+  ],
+  "localised": [
+    {
+      "label": "Supporting you",
+      "icon": "handshake",
+      "path": "/support",
+      "route": "^/support"
+    },
+    {
+      "label": "Your community",
+      "icon": "users",
+      "path": "/community",
+      "route": "^/community"
+    },
+    {
+      "label": "Map",
+      "icon": "map-marked-alt",
+      "path": "/map",
+      "route": "^/map"
+    },
+    {
+      "label": "Digital health",
+      "icon": "list-alt",
+      "path": "/tools",
+      "route": "^/tools"
+    },
+    {
+      "label": "Stories",
+      "icon": "newspaper",
+      "path": "/stories",
+      "route": "^/stories"
+    },
+    {
+      "label": "Local team",
+      "icon": "envelope",
+      "path": "/contact",
+      "route": "^/contact"
+    }
+  ]
+}

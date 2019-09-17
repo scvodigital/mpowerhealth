@@ -1,0 +1,65 @@
+{
+  "size": 10,
+  "from": {{multiply (subtract (default @root.request.params.query.page 1) 1) 10}},
+  "_source": [
+    "title",
+    "url",
+    "slug",
+    "publish_on",
+    "content",
+    "description",
+    "image_feature",
+    "image_wide",
+    "featured_image",
+    "header_background"
+  ],
+  "query": {
+    "bool": {
+      "minimum_should_match": "1",
+      "should": [
+        {{#each @root.context.metaData.site-configurations ~}}
+        {{#ifAny (compare @key "===" "default") (compare @key @root.data.currentSite.name) ~}}
+        {
+          "bool": {
+            "must": [
+              {
+                "term": {
+                  "_type": {
+                    "value" : "mpower-post-{{@key}}"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {{/ifAny ~}}
+        {{/each ~}}
+        {
+          "bool": {
+            "must": [
+              {
+                "term": {
+                  "_type": {
+                    "value" : "tfn-legacy-post-news"
+                  }
+                }
+              },
+              {
+                "term": {
+                  "categories": ""
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "publish_on": {
+        "order" : "desc"
+      }
+    }
+  ]
+}

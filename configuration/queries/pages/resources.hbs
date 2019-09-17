@@ -1,0 +1,31 @@
+{{#json}}
+  {{{json key="size" value=100}}},
+  {{#json key="_source" type="array"}}
+    "wpid",
+    "slug",
+    "title",
+    "content",
+    "areas_used_list",
+    "website_address"
+  {{/json}},
+  {{#json key="query"}}
+    {{#compare @root.data.currentSite.name "default" ~}}
+      {{#json key="match_all"}}
+      {{/json}}
+    {{else}}
+      {{#json key="bool"}}
+        {{#json key="filter" type="array"}}
+          {{#json}}
+            {{#json key="term"}}
+              {{{json key="areas_used_list" value=@root.data.currentSite.name}}}
+            {{/json}}
+          {{/json}},
+          {{#json}}
+            {{#json key="match_all"}}
+            {{/json}}
+          {{/json}}
+        {{/json}}
+      {{/json}}
+    {{/compare ~}}
+  {{/json}}
+{{/json}}

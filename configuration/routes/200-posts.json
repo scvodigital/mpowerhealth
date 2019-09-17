@@ -1,0 +1,47 @@
+{
+  "name": "posts",
+  "pattern": "/news",
+  "debug": false,
+  "tasks": [
+    "context.metaData.commonTasks.currentSite",
+    {
+      "name": "primaryResponse",
+      "taskModule": "elasticsearch",
+      "config": {
+        "connectionStringTemplate": "{$../data/elasticsearch-url.txt}",
+        "elasticsearchConfig": {
+          "apiVersion": "5.6"
+        },
+        "queryTemplates": {
+          "index": "{$../data/elasticsearch-index.txt}",
+          "type": "mpower-post-default,mpower-post-ayrshirearran,mpower-post-dumfriesgalloway,mpower-post-westernisles,mpower-post-fermanagh,mpower-post-newrysoutharmagh,mpower-post-droghedacarrickmacross,mpower-post-finnvalley,mpower-post-southleitrim",
+          "template": ">context.metaData.handlebars.queries.posts_latest"
+        }
+      },
+      "renderer": "handlebars"
+    },
+    {
+      "name": "destination",
+      "taskModule": "renderLayout",
+      "renderer": "handlebars",
+      "config": {
+        "logic": {
+          "if": [
+            "default"
+          ]
+        },
+        "output": "body",
+        "layouts": {
+          "default": {
+            "layout": ">context.metaData.handlebars.layouts.default",
+            "parts": {
+              "head": ">context.metaData.handlebars.templates.pages_home-head-tags",
+              "body": ">context.metaData.handlebars.templates.posts_posts"
+            },
+            "contentType": "text/html"
+          }
+        }
+      }
+    }
+  ]
+}

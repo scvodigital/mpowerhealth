@@ -1,0 +1,35 @@
+{{#json}}
+  {{{json key="size" value=100}}},
+  {{#json key="_source" type="array"}}
+    "wpid",
+    "slug",
+    "title",
+    "content",
+    "geo_coords",
+    "postcode",
+    "address",
+    "phone_number",
+    "email_address",
+    "website_address"
+  {{/json}},
+  {{#json key="query"}}
+    {{#compare @root.data.currentSite.name "default" ~}}
+      {{#json key="match_all"}}
+      {{/json}}
+    {{else}}
+      {{#json key="bool"}}
+        {{#json key="filter" type="array"}}
+          {{#json}}
+            {{#json key="term"}}
+              {{{json key="_type" value=(concat "mpower-organisation-" @root.data.currentSite.name)}}}
+            {{/json}}
+          {{/json}},
+          {{#json}}
+            {{#json key="match_all"}}
+            {{/json}}
+          {{/json}}
+        {{/json}}
+      {{/json}}
+    {{/compare}}
+  {{/json}}
+{{/json}}

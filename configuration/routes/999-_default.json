@@ -1,0 +1,47 @@
+{
+  "name": "_default",
+  "pattern": "/*path",
+  "debug": false,
+  "tasks": [
+    "context.metaData.commonTasks.currentSite",
+    {
+      "name": "primaryResponse",
+      "taskModule": "elasticsearch",
+      "config": {
+        "connectionStringTemplate": "{$../data/elasticsearch-url.txt}",
+        "elasticsearchConfig": {
+          "apiVersion": "5.6"
+        },
+        "queryTemplates": {
+          "index": "{$../data/elasticsearch-index.txt}",
+          "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+          "template": ">context.metaData.handlebars.queries.pages_page"
+        }
+      },
+      "renderer": "handlebars"
+    },
+    {
+      "name": "destination",
+      "taskModule": "renderLayout",
+      "renderer": "handlebars",
+      "config": {
+        "logic": {
+          "if": [
+            "default"
+          ]
+        },
+        "output": "body",
+        "layouts": {
+          "default": {
+            "layout": ">context.metaData.handlebars.layouts.default",
+            "parts": {
+              "head": ">context.metaData.handlebars.templates.pages_page-head-tags",
+              "body": ">context.metaData.handlebars.templates.pages_page"
+            },
+            "contentType": "text/html"
+          }
+        }
+      }
+    }
+  ]
+}
