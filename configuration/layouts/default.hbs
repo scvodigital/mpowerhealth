@@ -173,9 +173,7 @@
             </a>
             {{#compare @root.data.currentSite.name "default" ~}}
             {{#each @root.context.metaData.menus.corporate ~}}
-              <a class="mdc-list-item {{#if (regexMatch @root.request.url.pathname path "gi")}} mdc-list-item--activated{{/if}}"
-                  href="{{stripTrailingSlash path}}"
-                  {{#if (regexMatch @root.request.url.pathname path "gi")}}aria-selected="true"{{else}}aria-hidden="true"{{/if}}>
+              <a class="mdc-list-item {{#if (regexMatch @root.request.url.pathname path "gi")}} mdc-list-item--activated{{/if}}" href="{{stripTrailingSlash path}}" {{#if (regexMatch @root.request.url.pathname path "gi")}}aria-selected="true"{{else}}aria-hidden="true"{{/if}}>
                 {{#if icon ~}}
                 <span class="far fa-{{icon}} mdc-list-item__graphic" aria-hidden="true"></span>
                 {{/if ~}}
@@ -184,9 +182,7 @@
             {{/each}}
             {{else}}
             {{#each @root.context.metaData.menus.localised ~}}
-              <a class="mdc-list-item {{#if (regexMatch @root.request.url.pathname path "gi")}} mdc-list-item--activated{{/if}}"
-                  href="{{stripTrailingSlash path}}"
-                  {{#if (regexMatch @root.request.url.pathname path "gi")}}aria-selected="true"{{else}}aria-hidden="true"{{/if}}>
+              <a class="mdc-list-item {{#if (regexMatch @root.request.url.pathname path "gi")}} mdc-list-item--activated{{/if}}" href="{{stripTrailingSlash path}}" {{#if (regexMatch @root.request.url.pathname path "gi")}}aria-selected="true"{{else}}aria-hidden="true"{{/if}}>
                 {{#if icon ~}}
                 <span class="far fa-{{icon}} mdc-list-item__graphic" aria-hidden="true"></span>
                 {{/if ~}}
@@ -216,17 +212,16 @@
         {{#compare @root.data.currentSite.name "default" ~}}
         <div class="container-content">
           <div class="partner-logos">
-            <a href="http://www.cawt.com/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/06/logo-2.png"></a>
-            <a href="https://nhsnss.org/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/06/logo-1.png"></a>
-            <a href="https://www.hse.ie/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/06/logo-3.png"></a>
-            <a href="https://www.nhsaaa.net/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-4.png"></a>
-            <a href="http://www.nhsdg.scot.nhs.uk"><img src="{{~>asset_url url='images/logos/partners/dumfriesgalloway.png'~}}"></a>
-            <a href="https://www.wihb.scot.nhs.uk/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-6.png"></a>
-            <a href="http://www.southerntrust.hscni.net/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-7.png"></a>
-            <a href="http://www.westerntrust.hscni.net/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-8.png"></a>
-            <a href="https://www.uhi.ac.uk/"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-9.png"></a>
-            <a href="https://scvo.org"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-10.png"></a>
-            {{!-- <a href="https://www.seupb.eu/iva-overview"><img src="https://cms.mpowerhealth.eu/wp-content/uploads/sites/13/2019/03/logo-11.png"></a> --}}
+            <a href="http://www.cawt.com/"><img src="{{~>asset_url url='images/logos/partners/cawt.png' ~}}"></a>
+            <a href="https://nhsnss.org/"><img src="{{~>asset_url url='images/logos/partners/nhs-nss.png' ~}}"></a>
+            <a href="https://www.hse.ie/"><img src="{{~>asset_url url='images/logos/partners/hse.jpg' ~}}"></a>
+            <a href="https://www.nhsaaa.net/"><img src="{{~>asset_url url='images/logos/partners/nhs-ayrshire-arran.png'~}}"></a>
+            <a href="http://www.nhsdg.scot.nhs.uk"><img src="{{~>asset_url url='images/logos/partners/nhs-dumfries-galloway.png'~}}"></a>
+            <a href="https://www.wihb.scot.nhs.uk/"><img src="{{~>asset_url url='images/logos/partners/nhs-western-isles.png'~}}"></a>
+            <a href="http://www.southerntrust.hscni.net/"><img src="{{~>asset_url url='images/logos/partners/hsc-southern.png'~}}"></a>
+            <a href="http://www.westerntrust.hscni.net/"><img src="{{~>asset_url url='images/logos/partners/hsc-western.png'~}}"></a>
+            <a href="https://www.uhi.ac.uk/"><img src="{{~>asset_url url='images/logos/partners/uhi.png' ~}}"></a>
+            <a href="https://scvo.org"><img src="{{~>asset_url url='images/logos/scvo-inverse.png'~}}" style="width:150px;height:auto;vertical-align:top;margin-top:1.6rem;"></a>
           </div>
         </div>
         {{/compare ~}}
