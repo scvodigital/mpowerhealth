@@ -560,7 +560,7 @@
     }
   ],
   "metaData": {
-    "assetsVersion": "0.0.2",
+    "assetsVersion": "0.0.4",
     "assetsBase": "https://storage.googleapis.com/scvo-assets/test/mpowerhealth/",
     "title": "mPower Health",
     "menus": {
