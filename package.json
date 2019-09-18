@@ -1,6 +1,6 @@
 {
   "name": "@scvo/mpowerhealth",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Site configuration and assets for mpowerhealth.eu",
   "main": "index.js",
   "scripts": {
