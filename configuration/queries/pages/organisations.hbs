@@ -25,7 +25,8 @@
             {{/json}}
           {{/json}},
           {{#json}}
-            {{#json key="match_all"}}
+            {{#json key="exists"}}
+              {{{json key="field" value="postcode"}}}
             {{/json}}
           {{/json}}
         {{/json}}
