@@ -60,7 +60,7 @@
     "description": "Drogheda & Carrickmacross",
     "healthBoard": {
       "title": "HSE CH08",
-      "logo": "images/logos/partners/hse-ch08.png"
+      "logo": "images/logos/partners/hse.jpg"
     },
     "url": "https://drogheda-carrickmacross.mpowerhealth.eu"
   },
@@ -70,7 +70,7 @@
     "description": "Finn Valley",
     "healthBoard": {
       "title": "HSE CH01",
-      "logo": "images/logos/partners/hse-ch01.png"
+      "logo": "images/logos/partners/hse.jpg"
     },
     "url": "https://finn-valley.mpowerhealth.eu"
   },
@@ -80,7 +80,7 @@
     "description": "South Leitrim",
     "healthBoard": {
       "title": "HSE CH01",
-      "logo": "images/logos/partners/hse-ch01.png"
+      "logo": "images/logos/partners/hse.jpg"
     },
     "url": "https://south-leitrim.mpowerhealth.eu"
   }
