@@ -560,7 +560,7 @@
     }
   ],
   "metaData": {
-    "assetsVersion": "0.0.7",
+    "assetsVersion": "0.0.9",
     "assetsBase": "https://storage.googleapis.com/scvo-assets/test/mpowerhealth/",
     "title": "mPower Health",
     "menus": {
@@ -594,12 +594,6 @@
           "icon": "envelope",
           "path": "/contact",
           "route": "^/contact"
-        },
-        {
-          "label": "Resources",
-          "icon": "books",
-          "path": "/resources",
-          "route": "^/resources"
         },
         {
           "label": "In your area",

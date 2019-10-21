@@ -31,12 +31,6 @@
       "route": "^/contact"
     },
     {
-      "label": "Resources",
-      "icon": "books",
-      "path": "/resources",
-      "route": "^/resources"
-    },
-    {
       "label": "In your area",
       "icon": "books",
       "path": "/in-your-area",
