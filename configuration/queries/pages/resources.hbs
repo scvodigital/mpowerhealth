@@ -27,5 +27,12 @@
         {{/json}}
       {{/json}}
     {{/compare ~}}
+  {{/json}},
+  {{#json key="sort" type="array"}}
+    {{#json}}
+      {{#json key="publish_on"}}
+        {{{json key="order" value="desc"}}}
+      {{/json}}
+    {{/json}}
   {{/json}}
 {{/json}}
