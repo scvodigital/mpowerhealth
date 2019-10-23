@@ -560,7 +560,7 @@
     }
   ],
   "metaData": {
-    "assetsVersion": "0.0.14",
+    "assetsVersion": "0.0.15",
     "assetsBase": "https://storage.googleapis.com/scvo-assets/test/mpowerhealth/",
     "title": "mPower Health",
     "menus": {
@@ -678,7 +678,7 @@
       "default": {
         "name": "default",
         "title": "mPower",
-        "url": "https://test.mpowerhealth.eu"
+        "url": "https://mpowerhealth.eu"
       },
       "ayrshirearran": {
         "name": "ayrshirearran",
