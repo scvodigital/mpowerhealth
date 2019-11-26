@@ -14,7 +14,7 @@
         },
         "queryTemplates": {
           "index": "{$../data/elasticsearch-index.txt}",
-          "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-droghedacarrickmacross,mpower-page-finnvalley,mpower-page-southleitrim",
+          "type": "mpower-page-default,mpower-page-ayrshirearran,mpower-page-dumfriesgalloway,mpower-page-westernisles,mpower-page-fermanagh,mpower-page-newrysoutharmagh,mpower-page-louthsouthmonaghan,mpower-page-finnvalley,mpower-page-southleitrim",
           "template": ">context.metaData.handlebars.queries.pages_page"
         }
       },
@@ -32,7 +32,7 @@
           {
             "name": "organisations",
             "index": "{$../data/elasticsearch-index.txt}",
-            "type": "mpower-organisation-ayrshirearran,mpower-organisation-dumfriesgalloway,mpower-organisation-westernisles,mpower-organisation-fermanagh,mpower-organisation-newrysoutharmagh,mpower-organisation-droghedacarrickmacross,mpower-organisation-finnvalley,mpower-organisation-southleitrim",
+            "type": "mpower-organisation-ayrshirearran,mpower-organisation-dumfriesgalloway,mpower-organisation-westernisles,mpower-organisation-fermanagh,mpower-organisation-newrysoutharmagh,mpower-organisation-louthsouthmonaghan,mpower-organisation-finnvalley,mpower-organisation-southleitrim",
             "template": ">context.metaData.handlebars.queries.pages_organisations"
           }
         ]

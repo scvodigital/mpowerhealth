@@ -54,15 +54,15 @@
     },
     "url": "https://newry-south-armagh.mpowerhealth.eu"
   },
-  "droghedacarrickmacross": {
-    "name": "droghedacarrickmacross",
-    "title": "mPower Drogheda & Carrickmacross",
-    "description": "Drogheda & Carrickmacross",
+  "louthsouthmonaghan": {
+    "name": "louthsouthmonaghan",
+    "title": "mPower Louth & South Monaghan",
+    "description": "Louth & South Monaghan",
     "healthBoard": {
       "title": "HSE CH08",
       "logo": "images/logos/partners/hse.jpg"
     },
-    "url": "https://drogheda-carrickmacross.mpowerhealth.eu"
+    "url": "https://louth-southmonaghan.mpowerhealth.eu"
   },
   "finnvalley": {
     "name": "finnvalley",
