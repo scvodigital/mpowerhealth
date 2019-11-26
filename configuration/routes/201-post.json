@@ -14,7 +14,7 @@
         },
         "queryTemplates": {
           "index": "{$../data/elasticsearch-index.txt}",
-          "type": "mpower-post-default,mpower-post-ayrshirearran,mpower-post-dumfriesgalloway,mpower-post-westernisles,mpower-post-fermanagh,mpower-post-newrysoutharmagh,mpower-post-droghedacarrickmacross,mpower-post-finnvalley,mpower-post-southleitrim",
+          "type": "mpower-post-default,mpower-post-ayrshirearran,mpower-post-dumfriesgalloway,mpower-post-westernisles,mpower-post-fermanagh,mpower-post-newrysoutharmagh,mpower-post-louthsouthmonaghan,mpower-post-finnvalley,mpower-post-southleitrim",
           "template": ">context.metaData.handlebars.queries.posts_post"
         }
       },
