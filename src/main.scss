@@ -750,6 +750,14 @@ footer.mdc-layout__footer {
   float: right;
 }
 
+.wp-block-file__button {
+  background: $mdc-theme-orange;
+  color: white;
+  padding: $unit/4 $unit/2;
+  margin-left: $unit;
+  border-radius: $unit;
+}
+
 ::-moz-selection {
   color: white;
   background: black;
