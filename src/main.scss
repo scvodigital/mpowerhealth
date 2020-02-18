@@ -751,11 +751,20 @@ footer.mdc-layout__footer {
 }
 
 .wp-block-file__button {
-  background: $mdc-theme-orange;
-  color: white;
+  background: $mdc-theme-primary;
+  color: white !important;
+  text-decoration: none;
   padding: $unit/4 $unit/2;
   margin-left: $unit;
+  margin-bottom: $unit/5;
   border-radius: $unit;
+}
+.wp-block-file__button:hover {
+  text-decoration: none;
+  background: $mdc-theme-orange-dark;
+}
+.wp-block-file {
+  margin-bottom: $unit/2;
 }
 
 ::-moz-selection {
