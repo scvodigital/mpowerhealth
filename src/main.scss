@@ -25,6 +25,15 @@ $page-left: 11vw;
 
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap');
 
+.warning {
+  background-color: $mdc-theme-orange-dark;
+  p,
+  strong,
+  h2 {
+    color: white;
+  }
+}
+
 h1,
 h2,
 h3,
