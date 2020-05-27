@@ -4,19 +4,19 @@
       "label": "About",
       "icon": "info-circle",
       "path": "/about",
-      "route": "^/about"
+      "route": "^/about$"
     },
     {
       "label": "Partners",
       "icon": "handshake",
       "path": "/partners",
-      "route": "^/partners"
+      "route": "^/partners$"
     },
     {
       "label": "News",
       "icon": "newspaper",
       "path": "/news",
-      "route": "^/news"
+      "route": "^/news$"
     },
     {
       "label": "Webinars",
@@ -28,25 +28,25 @@
       "label": "Stories",
       "icon": "newspaper",
       "path": "/stories",
-      "route": "^/stories"
+      "route": "^/stories$"
     },
     {
       "label": "Newsletters",
       "icon": "newspaper",
       "path": "/newsletters",
-      "route": "^/newsletters"
+      "route": "^/newsletters$"
     },
     {
       "label": "Contact",
       "icon": "envelope",
       "path": "/contact",
-      "route": "^/contact"
+      "route": "^/contact$"
     },
     {
       "label": "In your area",
       "icon": "books",
       "path": "/in-your-area",
-      "route": "^/in-your-area"
+      "route": "^/in-your-area$"
     }
   ],
   "localised": [
@@ -54,37 +54,37 @@
       "label": "Supporting you",
       "icon": "handshake",
       "path": "/support",
-      "route": "^/support"
+      "route": "^/support$"
     },
     {
       "label": "Your community",
       "icon": "users",
       "path": "/community",
-      "route": "^/community"
+      "route": "^/community$"
     },
     {
       "label": "Map",
       "icon": "map-marked-alt",
       "path": "/map",
-      "route": "^/map"
+      "route": "^/map$"
     },
     {
       "label": "Digital health",
       "icon": "list-alt",
       "path": "/tools",
-      "route": "^/tools"
+      "route": "^/tools$"
     },
     {
       "label": "Stories",
       "icon": "newspaper",
       "path": "/stories",
-      "route": "^/stories"
+      "route": "^/stories$"
     },
     {
       "label": "Local team",
       "icon": "envelope",
       "path": "/contact",
-      "route": "^/contact"
+      "route": "^/contact$"
     }
   ]
 }
