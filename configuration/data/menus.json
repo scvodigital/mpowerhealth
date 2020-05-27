@@ -31,6 +31,12 @@
       "route": "^/stories"
     },
     {
+      "label": "Newsletters",
+      "icon": "newspaper",
+      "path": "/newsletters",
+      "route": "^/newsletters"
+    },
+    {
       "label": "Contact",
       "icon": "envelope",
       "path": "/contact",
