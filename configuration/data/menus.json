@@ -25,6 +25,12 @@
       "route": "^/webinars"
     },
     {
+      "label": "Stories",
+      "icon": "newspaper",
+      "path": "/stories",
+      "route": "^/stories"
+    },
+    {
       "label": "Contact",
       "icon": "envelope",
       "path": "/contact",
