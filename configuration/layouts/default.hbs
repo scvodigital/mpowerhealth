@@ -148,6 +148,11 @@
                       label=label}}
                 {{/each}}
                 {{/compare ~}}
+                {{>components_tab
+                    url="/covid-19"
+                    labelClasses="mdc-theme--on-primary"
+                    active=(regexMatch @root.request.url.pathname '/covid-19' "gi")
+                    label="COVID-19 update"}}
               {{/components_tab_bar}}
             </section>
           </div>
@@ -181,22 +186,14 @@
               </a>
             {{/each}}
             {{/compare ~}}
+            <a class="mdc-list-item {{#if (regexMatch @root.request.url.pathname '/covid-19' 'gi')}} mdc-list-item--activated{{/if}}" href="//covid-19" {{#if (regexMatch @root.request.url.pathname '/covid-19' 'gi')}}aria-selected="true"{{else}}aria-hidden="true"{{/if}}>
+              COVID-19 update
+            </a>
           </nav>
         </div>
       </aside>
 
       <div class="mdc-drawer-scrim"></div>
-
-      <div class="warning">
-        <main class="main-body drawer-container-temporary">
-          <div class="container-content t-margin-full b-padding-full t-padding">
-            <h2 class="t-padding">Coronavirus (COVID-19) update</h2>
-            <p>
-              During the current COVID-19 pandemic, the teams in each country are continuing to follow their own government guidelines. All mPower teams have adapted their working practices and the project is continuing to support beneficiaries through telephone and digital support. We encourage all who need support to <a href="https://contact">get in touch</a>. As a project we support those who are most vulnerable to the virus, and therefore want to do all we can to help at this difficult time. Stay safe, stay home and stay healthy and with our support we hope you will stay connected.
-            </p>
-          </div>
-        </main>
-      </div>
 
       <main class="mdc-theme--primary-light-bg main-body {{#if layoutParts.sidebar}}drawer-container-permanent{{else}}drawer-container-temporary{{/if}}">
         {{#if layoutParts.sidebar ~}}
