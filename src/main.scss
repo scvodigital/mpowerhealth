@@ -234,11 +234,11 @@ header {
       .mdc-tab__text-label {
         color: $mdc-theme-primary-dark !important;
         border-right: 2px solid $mdc-theme-footer;
-        padding: 0 $unit*(3/4);
+        padding: 0 $unit/2;
       }
     }
     .mdc-tab:first-child {
-      padding-left: $unit*(1/3) !important;
+      padding-left: $unit*(2/3) !important;
     }
     .mdc-tab:last-child .mdc-tab__text-label {
       border-right: none;
