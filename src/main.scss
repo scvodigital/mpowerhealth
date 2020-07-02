@@ -229,12 +229,14 @@ header {
     #main-tab-bar {
       margin-top: $unit;
     }
+  }
+  .mdc-top-app-bar__lower {
     .mdc-tab {
       padding: 0 !important;
       .mdc-tab__text-label {
         color: $mdc-theme-primary-dark !important;
         border-right: 2px solid $mdc-theme-footer;
-        padding: 0 $unit/2;
+        padding: 0 $unit/2 !important;
       }
     }
     .mdc-tab:first-child {
