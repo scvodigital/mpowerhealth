@@ -63,12 +63,6 @@
       "route": "^/community$"
     },
     {
-      "label": "Map",
-      "icon": "map-marked-alt",
-      "path": "/map",
-      "route": "^/map$"
-    },
-    {
       "label": "Digital health",
       "icon": "list-alt",
       "path": "/tools",

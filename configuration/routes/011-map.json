@@ -1,6 +1,6 @@
 {
   "name": "page_map",
-  "pattern": "/map",
+  "pattern": "_disabled_/map",
   "debug": false,
   "tasks": [
     "context.metaData.commonTasks.currentSite",
